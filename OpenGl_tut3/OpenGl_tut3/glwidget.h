@@ -11,9 +11,9 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <GL/freeglut.h>
-#include <ogldev_math_3d.h>
+//#include <ogldev_math_3d.h>
 #include <Util/mouse.h>
-#include <Util/camera.h>
+#include <Util/Cam/camera.h>
 #include <QWheelEvent>
 
 class Glwidget : public QGLWidget

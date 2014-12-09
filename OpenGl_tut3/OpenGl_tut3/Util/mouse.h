@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <stdio.h>
+#include <QMouseEvent>
 
 using namespace std;
 class Mouse
@@ -24,6 +25,10 @@ public:
     static bool LEFT;
     static bool MIDDLE;
     static bool RIGHT;
+
+    static void mouseMove(QMouseEvent *ev);
+    static void mousePress(QMouseEvent *ev);
+    static void mouseRelease(QMouseEvent *ev);
 };
 
 #endif // MOUSE_H
