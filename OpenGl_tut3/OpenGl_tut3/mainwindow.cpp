@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     Glwidget *wid = new Glwidget(this);
     wid->show();
+    label = new QLabel(this);
+    label->setText("  Perspective");
+    label->show();
 }
 
 MainWindow::~MainWindow()

@@ -11,7 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets opengl
 TARGET = OpenGl_tut3
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     glwidget.cpp \
@@ -25,6 +24,9 @@ SOURCES += main.cpp\
     Display/Object3d/tetrahedron.cpp
 
 LIBS += -lGLEW -lglut -lGL -lGLU
+LIBS += -L/lib64 -lgmp -lCGAL
+
+QMAKE_CXXFLAGS += -frounding-math
 
 HEADERS  += mainwindow.h \
     glwidget.h \

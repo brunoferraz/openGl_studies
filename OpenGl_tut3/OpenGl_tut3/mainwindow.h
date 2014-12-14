@@ -6,6 +6,7 @@
 #include <glwidget.h>
 #include <QMouseEvent>
 #include <Util/mouse.h>
+#include <QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    QLabel* label;
 private:
     Ui::MainWindow *ui;
 };

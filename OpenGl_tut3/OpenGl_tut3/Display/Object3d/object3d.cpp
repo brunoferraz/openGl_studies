@@ -11,6 +11,10 @@ Object3d::Object3d()
     //P.make_tetrahedron(p,q,r,s);
     //decorator.create_loop();
     //CGAL_assertion( decorator.is_valid());
+//    HDS hds;
+//    Decorator decorator(hds);
+//    decorator.create_loop();
+//    CGAL_assertion( decorator.is_valid());
 }
 
 void Object3d::display()
