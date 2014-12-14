@@ -17,7 +17,12 @@ SOURCES += main.cpp\
     glwidget.cpp \
     Util/mouse.cpp \
     Util/Cam/cameraset.cpp \
-    Util/Cam/camera.cpp
+    Util/Cam/camera.cpp \
+    Util/Cam/cameraortho.cpp \
+    Display/displaylist.cpp \
+    Display/Object3d/object3d.cpp \
+    Display/Object3d/cube.cpp \
+    Display/Object3d/tetrahedron.cpp
 
 LIBS += -lGLEW -lglut -lGL -lGLU
 
@@ -25,7 +30,12 @@ HEADERS  += mainwindow.h \
     glwidget.h \
     Util/mouse.h \
     Util/Cam/cameraset.h \
-    Util/Cam/camera.h
+    Util/Cam/camera.h \
+    Util/Cam/cameraortho.h \
+    Display/displaylist.h \
+    Display/Object3d/object3d.h \
+    Display/Object3d/cube.h \
+    Display/Object3d/tetrahedron.h
 
 FORMS    += mainwindow.ui
 

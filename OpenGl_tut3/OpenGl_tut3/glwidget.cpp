@@ -4,7 +4,6 @@ Glwidget::Glwidget(QWidget *parent) :
     QGLWidget(parent)
 {
     this->resize(this->parentWidget()->width(), this->parentWidget()->height());
-    cameraPos << 0, 2, 3;
 }
 
 void Glwidget::initializeGL()
@@ -12,8 +11,8 @@ void Glwidget::initializeGL()
     glShadeModel(GL_SMOOTH);
     qglClearColor(Qt::black);
     glEnable(GL_DEPTH_TEST);
-    Camera::setPos(0, 0,-4);
-    Camera::init();
+    //CameraSet::currentCamera->setPos(0, 0, -4);
+    CameraSet::init();
     configScreen(this->width(), this->height());
 }
 
@@ -25,13 +24,14 @@ void Glwidget::paintGL()
 
 void Glwidget::drawScene()
 {
+    glPointSize(10);
     glBegin(GL_POINTS);
     float factor = 10;
     QColor color(255, 255, 255);
-    float step = factor/500;
+    float step = factor/200;
         for(float j= -1; j < 1; j+=step){
             qglColor(color);
-            for(int i = 0; i < 360; i+=5){
+            for(int i = 0; i < 360; i+=10){
                 GLfloat posX, posY, posZ;
                 posX = std::sin(i);
                 posY = j;
@@ -45,28 +45,21 @@ void Glwidget::drawScene()
 
 void Glwidget::configScreen(int w, int h)
 {
-    Camera::configScreen(w, h);
+    CameraSet::currentCamera->configScreen(w, h);
 }
 
 void Glwidget::mouseMoveEvent(QMouseEvent *ev)
 {
     Mouse::setPos(ev->x(), ev->y());
-    if(Mouse::MIDDLE){
-        Camera::track(Mouse::velX);
-        Camera::pedestal(Mouse::velY);
-    }else if(Mouse::LEFT) {
-        Camera::pan(-Mouse::velX);
-    }else if(Mouse::RIGHT) {
-        Camera::tilt(Mouse::velY);
-    }
-    configScreen(this->width(), this->height());
+    CameraSet::mouseMove(ev);
+    CameraSet::currentCamera->configScreen(this->width(), this->height());
     QGLWidget::update();
 }
 
 void Glwidget::wheelEvent(QWheelEvent *ev)
 {
-    Camera::dolly(ev->angleDelta().y());
-    configScreen(this->width(), this->height());
+    CameraSet::mouseWheel(ev);
+    CameraSet::currentCamera->configScreen(this->width(), this->height());
     QGLWidget::update();
 }
 

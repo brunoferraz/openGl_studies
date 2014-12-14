@@ -14,6 +14,7 @@
 //#include <ogldev_math_3d.h>
 #include <Util/mouse.h>
 #include <Util/Cam/camera.h>
+#include <Util/Cam/cameraset.h>
 #include <QWheelEvent>
 
 class Glwidget : public QGLWidget
@@ -21,6 +22,9 @@ class Glwidget : public QGLWidget
     Q_OBJECT
 public:
     explicit Glwidget(QWidget *parent = 0);
+
+    CameraSet cameraSet;
+
     void initializeGL();
     void paintGL();
 

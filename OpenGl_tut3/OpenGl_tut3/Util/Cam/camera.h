@@ -16,34 +16,33 @@ class Camera
 {
 public:
     Camera();
-    static Vector3f pos;
-    static Vector3f target;
-    static Vector3f up;
+    Vector3f pos;
+    Vector3f target;
+    Vector3f up;
 
-    static float tiltAngle;
-    static float panAngle;
+    float tiltAngle;
+    float panAngle;
 
-    static float distance;
+    float fov;
+    float near;
+    float far;
 
-    static float fov;
-    static float near;
-    static float far;
+    void setPos(float _x, float _y, float _z);
+    void setTarget(float _x, float _y, float _z);
+    void setUp(float _x, float _y, float _z);
 
-    static void setPos(float _x, float _y, float _z);
-    static void setTarget(float _x, float _y, float _z);
-    static void setUp(float _x, float _y, float _z);
+    void track(float x);
+    void pedestal(float y);
+    void dolly(float z);
+    void pan(float angle);
+    void tilt(float angle);
 
-    static void track(float x);
-    static void pedestal(float y);
-    static void dolly(float z);
-    static void pan(float angle);
-    static void tilt(float angle);
+    virtual void configScreen(int w, int h);
+    virtual void configCam();
 
-    static void configScreen(int w, int h);
+    void display();
 
-    static void display();
-
-    static void init();
+    void init();
 };
 
 #endif // CAMERA_H

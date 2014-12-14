@@ -2,7 +2,7 @@
 
 Camera::Camera()
 {
-
+    Camera::configCam();
 }
 
 void Camera::setPos(float _x, float _y, float _z)
@@ -46,7 +46,7 @@ void Camera::dolly(float z)
 void Camera::pan(float angle)
 {
     float panRad = angle * 3.14/180;
-    panRad /= -5;
+    panRad /= 5;
     Matrix3f rotMat;
     rotMat << std::cos(panRad), 0, std::sin(panRad), 0, 1, 0, -std::sin(panRad), 0, std::cos(panRad);
     Vector3f lastpos = pos;
@@ -80,9 +80,9 @@ void Camera::configScreen(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(fov, w/h, near, far);
-    gluLookAt(Camera::pos(0),    Camera::pos(1),      Camera::pos(2),
-              Camera::target(0), Camera::target(1),   Camera::target(2),
-              Camera::up(0),     Camera::up(1),       Camera::up(2));
+    gluLookAt(pos(0),    pos(1),      pos(2),
+              target(0), target(1),   target(2),
+              up(0),     up(1),       up(2));
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -100,14 +100,16 @@ void Camera::init()
     posBase(0) = 0;
     posBase.normalize();
     tiltAngle = std::acos(angleBase.dot(posBase))*180/3.14;
-    //qDebug() << panAngle << " " << tiltAngle;
 }
-Vector3f Camera::pos    = Vector3f(0.0, 0.0, 0.0);
-Vector3f Camera::target = Vector3f(0.0, 0.0, 0.0);
-Vector3f Camera::up     = Vector3f(0.0, 1.0, 0.0);
-float Camera::distance  = 0.0;
-float Camera::tiltAngle = 0;
-float Camera::panAngle  = 0;
-float Camera::fov       = 45;
-float Camera::near      = 0.1;
-float Camera::far       = 100;
+
+void Camera::configCam()
+{
+    pos         = Vector3f(0.0, 0.0, -4.0);
+    target      = Vector3f(0.0, 0.0, 0.0);
+    up          = Vector3f(0.0, 1.0, 0.0);
+    tiltAngle   = 0;
+    panAngle    = 0;
+    fov         = 45;
+    near        = 0.1;
+    far         = 100;
+}
