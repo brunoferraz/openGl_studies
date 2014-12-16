@@ -55,7 +55,11 @@ SOURCES       = ../OpenGl_tut3/main.cpp \
 		../OpenGl_tut3/Display/displaylist.cpp \
 		../OpenGl_tut3/Display/Object3d/object3d.cpp \
 		../OpenGl_tut3/Display/Object3d/cube.cpp \
-		../OpenGl_tut3/Display/Object3d/tetrahedron.cpp moc_mainwindow.cpp \
+		../OpenGl_tut3/Display/Object3d/tetrahedron.cpp \
+		../OpenGl_tut3/Display/Object3d/sphere.cpp \
+		../OpenGl_tut3/Display/InterfaceElements/grid.cpp \
+		../OpenGl_tut3/Util/keyboard.cpp \
+		../OpenGl_tut3/Display/interface.cpp moc_mainwindow.cpp \
 		moc_glwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
@@ -68,6 +72,10 @@ OBJECTS       = main.o \
 		object3d.o \
 		cube.o \
 		tetrahedron.o \
+		sphere.o \
+		grid.o \
+		keyboard.o \
+		interface.o \
 		moc_mainwindow.o \
 		moc_glwidget.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -306,7 +314,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/OpenGl_tut31.0.0 || mkdir -p .tmp/OpenGl_tut31.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/OpenGl_tut31.0.0/ && $(COPY_FILE) --parents ../OpenGl_tut3/mainwindow.h ../OpenGl_tut3/glwidget.h ../OpenGl_tut3/Util/mouse.h ../OpenGl_tut3/Util/Cam/cameraset.h ../OpenGl_tut3/Util/Cam/camera.h ../OpenGl_tut3/Util/Cam/cameraortho.h ../OpenGl_tut3/Display/displaylist.h ../OpenGl_tut3/Display/Object3d/object3d.h ../OpenGl_tut3/Display/Object3d/cube.h ../OpenGl_tut3/Display/Object3d/tetrahedron.h .tmp/OpenGl_tut31.0.0/ && $(COPY_FILE) --parents ../OpenGl_tut3/main.cpp ../OpenGl_tut3/mainwindow.cpp ../OpenGl_tut3/glwidget.cpp ../OpenGl_tut3/Util/mouse.cpp ../OpenGl_tut3/Util/Cam/cameraset.cpp ../OpenGl_tut3/Util/Cam/camera.cpp ../OpenGl_tut3/Util/Cam/cameraortho.cpp ../OpenGl_tut3/Display/displaylist.cpp ../OpenGl_tut3/Display/Object3d/object3d.cpp ../OpenGl_tut3/Display/Object3d/cube.cpp ../OpenGl_tut3/Display/Object3d/tetrahedron.cpp .tmp/OpenGl_tut31.0.0/ && $(COPY_FILE) --parents ../OpenGl_tut3/mainwindow.ui .tmp/OpenGl_tut31.0.0/ && (cd `dirname .tmp/OpenGl_tut31.0.0` && $(TAR) OpenGl_tut31.0.0.tar OpenGl_tut31.0.0 && $(COMPRESS) OpenGl_tut31.0.0.tar) && $(MOVE) `dirname .tmp/OpenGl_tut31.0.0`/OpenGl_tut31.0.0.tar.gz . && $(DEL_FILE) -r .tmp/OpenGl_tut31.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/OpenGl_tut31.0.0/ && $(COPY_FILE) --parents ../OpenGl_tut3/mainwindow.h ../OpenGl_tut3/glwidget.h ../OpenGl_tut3/Util/mouse.h ../OpenGl_tut3/Util/Cam/cameraset.h ../OpenGl_tut3/Util/Cam/camera.h ../OpenGl_tut3/Util/Cam/cameraortho.h ../OpenGl_tut3/Display/displaylist.h ../OpenGl_tut3/Display/Object3d/object3d.h ../OpenGl_tut3/Display/Object3d/cube.h ../OpenGl_tut3/Display/Object3d/tetrahedron.h ../OpenGl_tut3/Display/Object3d/sphere.h ../OpenGl_tut3/Display/InterfaceElements/grid.h ../OpenGl_tut3/Util/keyboard.h ../OpenGl_tut3/Display/interface.h .tmp/OpenGl_tut31.0.0/ && $(COPY_FILE) --parents ../OpenGl_tut3/main.cpp ../OpenGl_tut3/mainwindow.cpp ../OpenGl_tut3/glwidget.cpp ../OpenGl_tut3/Util/mouse.cpp ../OpenGl_tut3/Util/Cam/cameraset.cpp ../OpenGl_tut3/Util/Cam/camera.cpp ../OpenGl_tut3/Util/Cam/cameraortho.cpp ../OpenGl_tut3/Display/displaylist.cpp ../OpenGl_tut3/Display/Object3d/object3d.cpp ../OpenGl_tut3/Display/Object3d/cube.cpp ../OpenGl_tut3/Display/Object3d/tetrahedron.cpp ../OpenGl_tut3/Display/Object3d/sphere.cpp ../OpenGl_tut3/Display/InterfaceElements/grid.cpp ../OpenGl_tut3/Util/keyboard.cpp ../OpenGl_tut3/Display/interface.cpp .tmp/OpenGl_tut31.0.0/ && $(COPY_FILE) --parents ../OpenGl_tut3/mainwindow.ui .tmp/OpenGl_tut31.0.0/ && (cd `dirname .tmp/OpenGl_tut31.0.0` && $(TAR) OpenGl_tut31.0.0.tar OpenGl_tut31.0.0 && $(COMPRESS) OpenGl_tut31.0.0.tar) && $(MOVE) `dirname .tmp/OpenGl_tut31.0.0`/OpenGl_tut31.0.0.tar.gz . && $(DEL_FILE) -r .tmp/OpenGl_tut31.0.0
 
 
 clean:compiler_clean 
@@ -464,11 +472,20 @@ moc_mainwindow.cpp: /usr/include/qt5/QtWidgets/QMainWindow \
 		../OpenGl_tut3/Include/GL/freeglut_std.h \
 		../OpenGl_tut3/Include/GL/freeglut_ext.h \
 		../OpenGl_tut3/Util/mouse.h \
+		../OpenGl_tut3/Util/keyboard.h \
+		/usr/include/qt5/QtGui/QKeyEvent \
 		../OpenGl_tut3/Util/Cam/camera.h \
+		/usr/include/qt5/QtCore/QString \
 		../OpenGl_tut3/Util/Cam/cameraset.h \
 		../OpenGl_tut3/Util/Cam/cameraortho.h \
 		/usr/include/qt5/QtCore/QList \
 		/usr/include/qt5/QtGui/QWheelEvent \
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		../OpenGl_tut3/Display/Object3d/tetrahedron.h \
+		../OpenGl_tut3/Display/InterfaceElements/grid.h \
+		/usr/include/qt5/QtWidgets/QLabel \
+		/usr/include/qt5/QtWidgets/qlabel.h \
+		/usr/include/qt5/QtWidgets/qframe.h \
 		../OpenGl_tut3/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OpenGl_tut3/mainwindow.h -o moc_mainwindow.cpp
 
@@ -599,11 +616,17 @@ moc_glwidget.cpp: /usr/include/qt5/QtOpenGL/QGLWidget \
 		../OpenGl_tut3/Include/GL/freeglut_std.h \
 		../OpenGl_tut3/Include/GL/freeglut_ext.h \
 		../OpenGl_tut3/Util/mouse.h \
+		../OpenGl_tut3/Util/keyboard.h \
+		/usr/include/qt5/QtGui/QKeyEvent \
 		../OpenGl_tut3/Util/Cam/camera.h \
+		/usr/include/qt5/QtCore/QString \
 		../OpenGl_tut3/Util/Cam/cameraset.h \
 		../OpenGl_tut3/Util/Cam/cameraortho.h \
 		/usr/include/qt5/QtCore/QList \
 		/usr/include/qt5/QtGui/QWheelEvent \
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		../OpenGl_tut3/Display/Object3d/tetrahedron.h \
+		../OpenGl_tut3/Display/InterfaceElements/grid.h \
 		../OpenGl_tut3/glwidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../OpenGl_tut3/glwidget.h -o moc_glwidget.cpp
 
@@ -758,11 +781,20 @@ main.o: ../OpenGl_tut3/main.cpp ../OpenGl_tut3/mainwindow.h \
 		../OpenGl_tut3/Include/GL/freeglut_std.h \
 		../OpenGl_tut3/Include/GL/freeglut_ext.h \
 		../OpenGl_tut3/Util/mouse.h \
+		../OpenGl_tut3/Util/keyboard.h \
+		/usr/include/qt5/QtGui/QKeyEvent \
 		../OpenGl_tut3/Util/Cam/camera.h \
+		/usr/include/qt5/QtCore/QString \
 		../OpenGl_tut3/Util/Cam/cameraset.h \
 		../OpenGl_tut3/Util/Cam/cameraortho.h \
 		/usr/include/qt5/QtCore/QList \
 		/usr/include/qt5/QtGui/QWheelEvent \
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		../OpenGl_tut3/Display/Object3d/tetrahedron.h \
+		../OpenGl_tut3/Display/InterfaceElements/grid.h \
+		/usr/include/qt5/QtWidgets/QLabel \
+		/usr/include/qt5/QtWidgets/qlabel.h \
+		/usr/include/qt5/QtWidgets/qframe.h \
 		/usr/include/qt5/QtWidgets/QApplication \
 		/usr/include/qt5/QtWidgets/qapplication.h \
 		/usr/include/qt5/QtCore/qcoreapplication.h \
@@ -905,11 +937,20 @@ mainwindow.o: ../OpenGl_tut3/mainwindow.cpp ../OpenGl_tut3/mainwindow.h \
 		../OpenGl_tut3/Include/GL/freeglut_std.h \
 		../OpenGl_tut3/Include/GL/freeglut_ext.h \
 		../OpenGl_tut3/Util/mouse.h \
+		../OpenGl_tut3/Util/keyboard.h \
+		/usr/include/qt5/QtGui/QKeyEvent \
 		../OpenGl_tut3/Util/Cam/camera.h \
+		/usr/include/qt5/QtCore/QString \
 		../OpenGl_tut3/Util/Cam/cameraset.h \
 		../OpenGl_tut3/Util/Cam/cameraortho.h \
 		/usr/include/qt5/QtCore/QList \
 		/usr/include/qt5/QtGui/QWheelEvent \
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		../OpenGl_tut3/Display/Object3d/tetrahedron.h \
+		../OpenGl_tut3/Display/InterfaceElements/grid.h \
+		/usr/include/qt5/QtWidgets/QLabel \
+		/usr/include/qt5/QtWidgets/qlabel.h \
+		/usr/include/qt5/QtWidgets/qframe.h \
 		ui_mainwindow.h \
 		/usr/include/qt5/QtCore/QVariant \
 		/usr/include/qt5/QtWidgets/QAction \
@@ -928,7 +969,6 @@ mainwindow.o: ../OpenGl_tut3/mainwindow.cpp ../OpenGl_tut3/mainwindow.h \
 		/usr/include/qt5/QtWidgets/qheaderview.h \
 		/usr/include/qt5/QtWidgets/qabstractitemview.h \
 		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		/usr/include/qt5/QtWidgets/qframe.h \
 		/usr/include/qt5/QtCore/qabstractitemmodel.h \
 		/usr/include/qt5/QtCore/qitemselectionmodel.h \
 		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
@@ -1072,11 +1112,17 @@ glwidget.o: ../OpenGl_tut3/glwidget.cpp ../OpenGl_tut3/glwidget.h \
 		../OpenGl_tut3/Include/GL/freeglut_std.h \
 		../OpenGl_tut3/Include/GL/freeglut_ext.h \
 		../OpenGl_tut3/Util/mouse.h \
+		../OpenGl_tut3/Util/keyboard.h \
+		/usr/include/qt5/QtGui/QKeyEvent \
 		../OpenGl_tut3/Util/Cam/camera.h \
+		/usr/include/qt5/QtCore/QString \
 		../OpenGl_tut3/Util/Cam/cameraset.h \
 		../OpenGl_tut3/Util/Cam/cameraortho.h \
 		/usr/include/qt5/QtCore/QList \
-		/usr/include/qt5/QtGui/QWheelEvent
+		/usr/include/qt5/QtGui/QWheelEvent \
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		../OpenGl_tut3/Display/Object3d/tetrahedron.h \
+		../OpenGl_tut3/Display/InterfaceElements/grid.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../OpenGl_tut3/glwidget.cpp
 
 mouse.o: ../OpenGl_tut3/Util/mouse.cpp ../OpenGl_tut3/Util/mouse.h \
@@ -1246,6 +1292,7 @@ cameraset.o: ../OpenGl_tut3/Util/Cam/cameraset.cpp ../OpenGl_tut3/Util/Cam/camer
 		/usr/include/qt5/QtCore/qpoint.h \
 		/usr/include/qt5/QtCore/qset.h \
 		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/QString \
 		../OpenGl_tut3/Util/Cam/cameraortho.h \
 		/usr/include/qt5/QtCore/QList \
 		/usr/include/qt5/QtGui/QMouseEvent \
@@ -1263,7 +1310,44 @@ cameraset.o: ../OpenGl_tut3/Util/Cam/cameraset.cpp ../OpenGl_tut3/Util/Cam/camer
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
 		../OpenGl_tut3/Util/mouse.h \
-		/usr/include/qt5/QtGui/QWheelEvent
+		/usr/include/qt5/QtGui/QWheelEvent \
+		/usr/include/qt5/QtGui/QKeyEvent \
+		../OpenGl_tut3/Util/keyboard.h \
+		/usr/include/qt5/QtOpenGL/QGLWidget \
+		/usr/include/qt5/QtOpenGL/qgl.h \
+		/usr/include/qt5/QtGui/qopengl.h \
+		/usr/include/qt5/QtCore/qt_windows.h \
+		/usr/include/qt5/QtGui/qopengles2ext.h \
+		/usr/include/qt5/QtGui/qopenglext.h \
+		/usr/include/qt5/QtWidgets/qwidget.h \
+		/usr/include/qt5/QtCore/qmargins.h \
+		/usr/include/qt5/QtGui/qpaintdevice.h \
+		/usr/include/qt5/QtGui/qpalette.h \
+		/usr/include/qt5/QtGui/qcolor.h \
+		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtGui/qmatrix.h \
+		/usr/include/qt5/QtGui/qpolygon.h \
+		/usr/include/qt5/QtCore/qline.h \
+		/usr/include/qt5/QtGui/qtransform.h \
+		/usr/include/qt5/QtGui/qpainterpath.h \
+		/usr/include/qt5/QtGui/qimage.h \
+		/usr/include/qt5/QtGui/qpixmap.h \
+		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtGui/qfont.h \
+		/usr/include/qt5/QtGui/qfontmetrics.h \
+		/usr/include/qt5/QtGui/qfontinfo.h \
+		/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qpaintengine.h \
+		/usr/include/qt5/QtGui/qpainter.h \
+		/usr/include/qt5/QtGui/qtextoption.h \
+		/usr/include/qt5/QtGui/qpen.h \
+		/usr/include/qt5/QtOpenGL/qglcolormap.h \
+		/usr/include/qt5/QtOpenGL/qtopenglglobal.h \
+		/usr/include/qt5/QtGui/QSurfaceFormat \
+		/usr/include/qt5/QtGui/qsurfaceformat.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cameraset.o ../OpenGl_tut3/Util/Cam/cameraset.cpp
 
 camera.o: ../OpenGl_tut3/Util/Cam/camera.cpp ../OpenGl_tut3/Util/Cam/camera.h \
@@ -1340,7 +1424,8 @@ camera.o: ../OpenGl_tut3/Util/Cam/camera.cpp ../OpenGl_tut3/Util/Cam/camera.h \
 		/usr/include/qt5/QtCore/qvector.h \
 		/usr/include/qt5/QtCore/qpoint.h \
 		/usr/include/qt5/QtCore/qset.h \
-		/usr/include/qt5/QtCore/qcontiguouscache.h
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o camera.o ../OpenGl_tut3/Util/Cam/camera.cpp
 
 cameraortho.o: ../OpenGl_tut3/Util/Cam/cameraortho.cpp ../OpenGl_tut3/Util/Cam/cameraortho.h \
@@ -1418,7 +1503,8 @@ cameraortho.o: ../OpenGl_tut3/Util/Cam/cameraortho.cpp ../OpenGl_tut3/Util/Cam/c
 		/usr/include/qt5/QtCore/qvector.h \
 		/usr/include/qt5/QtCore/qpoint.h \
 		/usr/include/qt5/QtCore/qset.h \
-		/usr/include/qt5/QtCore/qcontiguouscache.h
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cameraortho.o ../OpenGl_tut3/Util/Cam/cameraortho.cpp
 
 displaylist.o: ../OpenGl_tut3/Display/displaylist.cpp ../OpenGl_tut3/Display/displaylist.h \
@@ -1463,7 +1549,10 @@ displaylist.o: ../OpenGl_tut3/Display/displaylist.cpp ../OpenGl_tut3/Display/dis
 		/usr/include/qt5/QtCore/qsysinfo.h \
 		/usr/include/qt5/QtCore/qiterator.h \
 		/usr/include/qt5/QtCore/qrefcount.h \
-		../OpenGl_tut3/Display/Object3d/object3d.h
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		../OpenGl_tut3/Include/GL/freeglut.h \
+		../OpenGl_tut3/Include/GL/freeglut_std.h \
+		../OpenGl_tut3/Include/GL/freeglut_ext.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o displaylist.o ../OpenGl_tut3/Display/displaylist.cpp
 
 object3d.o: ../OpenGl_tut3/Display/Object3d/object3d.cpp ../OpenGl_tut3/Display/Object3d/object3d.h \
@@ -1507,7 +1596,10 @@ object3d.o: ../OpenGl_tut3/Display/Object3d/object3d.cpp ../OpenGl_tut3/Display/
 		/usr/include/qt5/QtCore/qtypetraits.h \
 		/usr/include/qt5/QtCore/qsysinfo.h \
 		/usr/include/qt5/QtCore/qiterator.h \
-		/usr/include/qt5/QtCore/qrefcount.h
+		/usr/include/qt5/QtCore/qrefcount.h \
+		../OpenGl_tut3/Include/GL/freeglut.h \
+		../OpenGl_tut3/Include/GL/freeglut_std.h \
+		../OpenGl_tut3/Include/GL/freeglut_ext.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o object3d.o ../OpenGl_tut3/Display/Object3d/object3d.cpp
 
 cube.o: ../OpenGl_tut3/Display/Object3d/cube.cpp ../OpenGl_tut3/Display/Object3d/cube.h \
@@ -1552,7 +1644,10 @@ cube.o: ../OpenGl_tut3/Display/Object3d/cube.cpp ../OpenGl_tut3/Display/Object3d
 		/usr/include/qt5/QtCore/qtypetraits.h \
 		/usr/include/qt5/QtCore/qsysinfo.h \
 		/usr/include/qt5/QtCore/qiterator.h \
-		/usr/include/qt5/QtCore/qrefcount.h
+		/usr/include/qt5/QtCore/qrefcount.h \
+		../OpenGl_tut3/Include/GL/freeglut.h \
+		../OpenGl_tut3/Include/GL/freeglut_std.h \
+		../OpenGl_tut3/Include/GL/freeglut_ext.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cube.o ../OpenGl_tut3/Display/Object3d/cube.cpp
 
 tetrahedron.o: ../OpenGl_tut3/Display/Object3d/tetrahedron.cpp ../OpenGl_tut3/Display/Object3d/tetrahedron.h \
@@ -1597,8 +1692,282 @@ tetrahedron.o: ../OpenGl_tut3/Display/Object3d/tetrahedron.cpp ../OpenGl_tut3/Di
 		/usr/include/qt5/QtCore/qtypetraits.h \
 		/usr/include/qt5/QtCore/qsysinfo.h \
 		/usr/include/qt5/QtCore/qiterator.h \
-		/usr/include/qt5/QtCore/qrefcount.h
+		/usr/include/qt5/QtCore/qrefcount.h \
+		../OpenGl_tut3/Include/GL/freeglut.h \
+		../OpenGl_tut3/Include/GL/freeglut_std.h \
+		../OpenGl_tut3/Include/GL/freeglut_ext.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tetrahedron.o ../OpenGl_tut3/Display/Object3d/tetrahedron.cpp
+
+sphere.o: ../OpenGl_tut3/Display/Object3d/sphere.cpp ../OpenGl_tut3/Display/Object3d/sphere.h \
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		/usr/include/qt5/QtCore/QList \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		../OpenGl_tut3/Include/GL/freeglut.h \
+		../OpenGl_tut3/Include/GL/freeglut_std.h \
+		../OpenGl_tut3/Include/GL/freeglut_ext.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sphere.o ../OpenGl_tut3/Display/Object3d/sphere.cpp
+
+grid.o: ../OpenGl_tut3/Display/InterfaceElements/grid.cpp ../OpenGl_tut3/Display/InterfaceElements/grid.h \
+		../OpenGl_tut3/Display/Object3d/object3d.h \
+		/usr/include/qt5/QtCore/QList \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		../OpenGl_tut3/Include/GL/freeglut.h \
+		../OpenGl_tut3/Include/GL/freeglut_std.h \
+		../OpenGl_tut3/Include/GL/freeglut_ext.h \
+		/usr/include/qt5/QtOpenGL/QGLWidget \
+		/usr/include/qt5/QtOpenGL/qgl.h \
+		/usr/include/qt5/QtGui/qopengl.h \
+		/usr/include/qt5/QtCore/qt_windows.h \
+		/usr/include/qt5/QtGui/qopengles2ext.h \
+		/usr/include/qt5/QtGui/qopenglext.h \
+		/usr/include/qt5/QtWidgets/qwidget.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/qmargins.h \
+		/usr/include/qt5/QtCore/qrect.h \
+		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtGui/qpaintdevice.h \
+		/usr/include/qt5/QtGui/qpalette.h \
+		/usr/include/qt5/QtGui/qcolor.h \
+		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtGui/qmatrix.h \
+		/usr/include/qt5/QtGui/qpolygon.h \
+		/usr/include/qt5/QtGui/qregion.h \
+		/usr/include/qt5/QtCore/qline.h \
+		/usr/include/qt5/QtGui/qtransform.h \
+		/usr/include/qt5/QtGui/qpainterpath.h \
+		/usr/include/qt5/QtGui/qimage.h \
+		/usr/include/qt5/QtGui/qpixmap.h \
+		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtGui/qfont.h \
+		/usr/include/qt5/QtGui/qfontmetrics.h \
+		/usr/include/qt5/QtGui/qfontinfo.h \
+		/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qurl.h \
+		/usr/include/qt5/QtCore/qurlquery.h \
+		/usr/include/qt5/QtCore/qfile.h \
+		/usr/include/qt5/QtCore/qfiledevice.h \
+		/usr/include/qt5/QtGui/qvector2d.h \
+		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/include/qt5/QtGui/qpaintengine.h \
+		/usr/include/qt5/QtGui/qpainter.h \
+		/usr/include/qt5/QtGui/qtextoption.h \
+		/usr/include/qt5/QtGui/qpen.h \
+		/usr/include/qt5/QtOpenGL/qglcolormap.h \
+		/usr/include/qt5/QtOpenGL/qtopenglglobal.h \
+		/usr/include/qt5/QtGui/QSurfaceFormat \
+		/usr/include/qt5/QtGui/qsurfaceformat.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grid.o ../OpenGl_tut3/Display/InterfaceElements/grid.cpp
+
+keyboard.o: ../OpenGl_tut3/Util/keyboard.cpp ../OpenGl_tut3/Util/keyboard.h \
+		/usr/include/qt5/QtGui/QKeyEvent \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtGui/qregion.h \
+		/usr/include/qt5/QtCore/qrect.h \
+		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtCore/qurl.h \
+		/usr/include/qt5/QtCore/qurlquery.h \
+		/usr/include/qt5/QtCore/qfile.h \
+		/usr/include/qt5/QtCore/qfiledevice.h \
+		/usr/include/qt5/QtGui/qvector2d.h \
+		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/include/qt5/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o keyboard.o ../OpenGl_tut3/Util/keyboard.cpp
+
+interface.o: ../OpenGl_tut3/Display/interface.cpp ../OpenGl_tut3/Display/interface.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o interface.o ../OpenGl_tut3/Display/interface.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

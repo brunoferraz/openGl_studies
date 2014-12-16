@@ -21,7 +21,11 @@ SOURCES += main.cpp\
     Display/displaylist.cpp \
     Display/Object3d/object3d.cpp \
     Display/Object3d/cube.cpp \
-    Display/Object3d/tetrahedron.cpp
+    Display/Object3d/tetrahedron.cpp \
+    Display/Object3d/sphere.cpp \
+    Display/InterfaceElements/grid.cpp \
+    Util/keyboard.cpp \
+    Display/interface.cpp
 
 LIBS += -lGLEW -lglut -lGL -lGLU
 LIBS += -L/lib64 -lgmp -lCGAL
@@ -37,7 +41,11 @@ HEADERS  += mainwindow.h \
     Display/displaylist.h \
     Display/Object3d/object3d.h \
     Display/Object3d/cube.h \
-    Display/Object3d/tetrahedron.h
+    Display/Object3d/tetrahedron.h \
+    Display/Object3d/sphere.h \
+    Display/InterfaceElements/grid.h \
+    Util/keyboard.h \
+    Display/interface.h
 
 FORMS    += mainwindow.ui
 

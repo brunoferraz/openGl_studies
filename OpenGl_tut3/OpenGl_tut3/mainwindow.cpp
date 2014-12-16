@@ -6,14 +6,33 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    Glwidget *wid = new Glwidget(this);
-    wid->show();
     label = new QLabel(this);
     label->setText("  Perspective");
     label->show();
+
+    glWidget= new Glwidget(this);
+    glWidget->show();
+
+    Interface::viewPortLabel = label;
+    //Interface::setviewPortLabel(label);
+    //Interface::setviewPortLabel(label);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *ev)
+{
+    Keyboard::keyPress(ev);
+    CameraSet::keyBoardEvent();
+    glWidget->configScreen(glWidget->width(), glWidget->height());
+    glWidget->updateGL();
+    //glWidget->update();
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *ev)
+{
+   Keyboard::keyRelease(ev);
 }

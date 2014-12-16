@@ -6,7 +6,11 @@
 #include <glwidget.h>
 #include <QMouseEvent>
 #include <Util/mouse.h>
+#include <QKeyEvent>
 #include <QLabel>
+#include <Util/keyboard.h>
+#include <Util/Cam/cameraset.h>
+#include <Display/interface.h>
 
 namespace Ui {
 class MainWindow;
@@ -19,7 +23,14 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    Interface inter;
     QLabel* label;
+
+    Glwidget *glWidget;
+
+    void keyPressEvent(QKeyEvent *ev);
+    void keyReleaseEvent(QKeyEvent *ev);
+
 private:
     Ui::MainWindow *ui;
 };

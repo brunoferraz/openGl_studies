@@ -1,19 +1,50 @@
 #include "glwidget.h"
+#include <mainwindow.h>
 
 Glwidget::Glwidget(QWidget *parent) :
     QGLWidget(parent)
 {
     this->resize(this->parentWidget()->width(), this->parentWidget()->height());
+    //cameraSet.canvas = this;
+    //MainWindow* main= this->parent();
+    //Interface::viewPortLabel = main->label;
 }
 
 void Glwidget::initializeGL()
 {
-    glShadeModel(GL_SMOOTH);
-    qglClearColor(Qt::black);
+    glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
-    //CameraSet::currentCamera->setPos(0, 0, -4);
-    CameraSet::init();
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_TEXTURE_2D);
+
+    glEnable(GL_LINE_SMOOTH);
+
+    GLfloat light_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat light_position[] = { 1.0, 20.0, 0.0, 0.0 };
+
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+//    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION,    2.0);
+//    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION,      1.0);
+//    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION,   0.5);
+
+    qglClearColor(Qt::black);
+
+
+    glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
+
+
+    CameraSet::init(this->width(), this->height());
     configScreen(this->width(), this->height());
+    obj = new Tetrahedron();
+    grid = new Grid();
 }
 
 void Glwidget::paintGL()
@@ -25,22 +56,8 @@ void Glwidget::paintGL()
 void Glwidget::drawScene()
 {
     glPointSize(10);
-    glBegin(GL_POINTS);
-    float factor = 10;
-    QColor color(255, 255, 255);
-    float step = factor/200;
-        for(float j= -1; j < 1; j+=step){
-            qglColor(color);
-            for(int i = 0; i < 360; i+=10){
-                GLfloat posX, posY, posZ;
-                posX = std::sin(i);
-                posY = j;
-                posZ = std::cos(i);
-                glVertex3f(posX, posY, posZ);
-            }
-            color.setRgb(color.red()-step*100, color.green()-step*50, color.blue()-step*10);
-        }
-    glEnd();
+    obj->display();
+    grid->display();
 }
 
 void Glwidget::configScreen(int w, int h)

@@ -9,6 +9,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+#include <QString>
+#include <Util/mouse.h>
 
 using namespace std;
 using namespace Eigen;
@@ -16,29 +18,42 @@ class Camera
 {
 public:
     Camera();
-    Vector3f pos;
-    Vector3f target;
-    Vector3f up;
+    Vector3f    pos;
+    Vector3f    target;
+    Vector3f    up;
+    float       distance;
+    QString     name;
+    int         type;
 
-    float tiltAngle;
-    float panAngle;
+    float       viewPort_width;
+    float       viewPort_height;
 
-    float fov;
-    float near;
-    float far;
+    float       tiltAngle;
+    float       panAngle;
+
+    float       fov;
+    float       near;
+    float       far;
 
     void setPos(float _x, float _y, float _z);
     void setTarget(float _x, float _y, float _z);
     void setUp(float _x, float _y, float _z);
+    void calculateDistance();
 
-    void track(float x);
-    void pedestal(float y);
-    void dolly(float z);
-    void pan(float angle);
-    void tilt(float angle);
+    virtual void track(float x);
+    virtual void pedestal(float y);
+    virtual void dolly(float z);
+    virtual void pan(float d);
+    virtual void tilt(float d);
+    virtual void rotateY(float d);
+    virtual void rotateZ(float d);
+    virtual void resetCamera();
 
-    virtual void configScreen(int w, int h);
-    virtual void configCam();
+
+    virtual void configScreen(int w = 1,int h = 1);
+    virtual void configCam(int cam =0);
+
+    virtual void mouseMove();
 
     void display();
 

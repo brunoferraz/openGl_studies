@@ -6,6 +6,7 @@ class Tetrahedron : public Object3d
 {
 public:
     Tetrahedron();
+    void display();
 };
 
 #endif // TETRAHEDRON_H
