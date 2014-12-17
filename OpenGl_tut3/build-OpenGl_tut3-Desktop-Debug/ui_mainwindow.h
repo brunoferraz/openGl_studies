@@ -26,9 +26,11 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QPushButton *pushButton;
+    QPushButton *bCameraControl;
     Glwidget *widget;
     QLabel *label;
+    QPushButton *bShape;
+    QPushButton *bResetCam;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -37,15 +39,24 @@ public:
         MainWindow->resize(548, 355);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(440, 310, 99, 27));
+        bCameraControl = new QPushButton(centralWidget);
+        bCameraControl->setObjectName(QStringLiteral("bCameraControl"));
+        bCameraControl->setGeometry(QRect(440, 280, 99, 27));
+        bCameraControl->setCheckable(true);
+        bCameraControl->setChecked(false);
         widget = new Glwidget(centralWidget);
         widget->setObjectName(QStringLiteral("widget"));
         widget->setGeometry(QRect(10, 30, 421, 311));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 10, 421, 17));
+        bShape = new QPushButton(centralWidget);
+        bShape->setObjectName(QStringLiteral("bShape"));
+        bShape->setGeometry(QRect(440, 30, 99, 27));
+        bResetCam = new QPushButton(centralWidget);
+        bResetCam->setObjectName(QStringLiteral("bResetCam"));
+        bResetCam->setGeometry(QRect(440, 310, 99, 27));
+        bResetCam->setChecked(false);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -56,8 +67,10 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0));
+        bCameraControl->setText(QApplication::translate("MainWindow", "Camera", 0));
         label->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        bShape->setText(QApplication::translate("MainWindow", "Shape", 0));
+        bResetCam->setText(QApplication::translate("MainWindow", "Reset Cam", 0));
     } // retranslateUi
 
 };

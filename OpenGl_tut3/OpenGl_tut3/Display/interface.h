@@ -14,7 +14,9 @@ class Interface
 public:
     Interface();
     static QLabel *viewPortLabel;
-//    static inline void setviewPortLabel(QLabel* l) { Interface::viewPortLabel = l;};
+
+    static bool bCamera;
+    static bool bShape;
 
     //Grid            *grid;
     void display();

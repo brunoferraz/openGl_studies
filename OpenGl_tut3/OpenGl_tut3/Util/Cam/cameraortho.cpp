@@ -2,7 +2,7 @@
 
 CameraOrtho::CameraOrtho()
 {
-    name = "Ortho";
+    info.name = "Ortho";
     axysDolly    = 1;
     axysTrack    = 0;
     axysPedestal = 1;
@@ -11,48 +11,48 @@ CameraOrtho::CameraOrtho()
 void CameraOrtho::configScreen(int w, int h)
 {
     if(h!=1 && w!=1){
-        viewPort_height = h;
-        viewPort_width  = w;
+        info.viewPort_height = h;
+        info.viewPort_width  = w;
     }
-    glViewport(0, 0, viewPort_width, viewPort_height);
+    glViewport(0, 0, info.viewPort_width, info.viewPort_height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    Vector3f delta = pos - target;
+    Vector3f delta = info.pos - info.target;
     float factor    = delta.norm();
-    float ratio     = viewPort_width/viewPort_height;
-    glOrtho(ratio * factor, -ratio * factor, -factor, factor, near, far);
-    gluLookAt(pos(0),    pos(1),      pos(2),
-              target(0), target(1),   target(2),
-              up(0),     up(1),       up(2));
+    float ratio     = info.viewPort_width/info.viewPort_height;
+    glOrtho(ratio * factor, -ratio * factor, -factor, factor, info.near, info.far);
+    gluLookAt(info.pos(0),    info.pos(1),      info.pos(2),
+              info.target(0), info.target(1),   info.target(2),
+              info.up(0),     info.up(1),       info.up(2));
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 
 void CameraOrtho::track(float x)
 {
-    Vector3f n = pos;
+    Vector3f n = info.pos;
     n(axysTrack) -= x/100;
-    pos = n;
-    n = target;
+    info.pos = n;
+    n = info.target;
     n(axysTrack) -= x/100;
-    target = n;
+    info.target = n;
 }
 
 void CameraOrtho::pedestal(float y)
 {
-    Vector3f n = pos;
+    Vector3f n = info.pos;
     n(axysPedestal) += y/100;
-    pos = n;
-    n = target;
+    info.pos = n;
+    n = info.target;
     n(axysPedestal) += y/100;
-    target = n;
+    info.target = n;
 }
 
 void CameraOrtho::dolly(float z)
 {
-    Vector3f nPos = pos;
+    Vector3f nPos = info.pos;
     nPos(axysDolly) -= z/1000;
-    pos = nPos;
+    info.pos = nPos;
 }
 
 void CameraOrtho::mouseMove()
@@ -61,45 +61,47 @@ void CameraOrtho::mouseMove()
 }
 void CameraOrtho::configCam(int cam)
 {
-    float dis = 2;
+    float dis = 1.2;
     switch(cam){
     case CameraSet::TOP:
-        pos         = Vector3f(0.0, dis, 0.0);
-        target      = Vector3f(0.0, 0.0, 0.0);
-        up          = Vector3f(0.0, 0.0, 1.0);
+        info.pos         = Vector3f(0.0, dis, 0.0);
+        info.target      = Vector3f(0.0, 0.0, 0.0);
+        info.up          = Vector3f(0.0, 0.0, 1.0);
         axysDolly   = 1;
         axysTrack   = 0;
         axysPedestal= 2;
-        name        = "TOP";
+        info.name        = "TOP";
         break;
     case CameraSet::LEFT:
-        pos         = Vector3f(dis, 0.0, 0.0);
-        target      = Vector3f(0.0, 0.0, 0.0);
-        up          = Vector3f(0.0, 1.0, 0.0);
+        info.pos         = Vector3f(dis, 0.0, 0.0);
+        info.target      = Vector3f(0.0, 0.0, 0.0);
+        info.up          = Vector3f(0.0, 1.0, 0.0);
         axysDolly   = 0;
         axysTrack   = 2;
         axysPedestal= 1;
-        name        = "LEFT";
+        info.name        = "LEFT";
         break;
     case CameraSet::FRONT:
-        pos         = Vector3f(0.0, 0.0, -dis);
-        target      = Vector3f(0.0, 0.0, 0.0);
-        up          = Vector3f(0.0, 1.0, 0.0);
+        info.pos         = Vector3f(0.0, 0.0, -dis);
+        info.target      = Vector3f(0.0, 0.0, 0.0);
+        info.up          = Vector3f(0.0, 1.0, 0.0);
         axysDolly   = 2;
         axysTrack   = 0;
         axysPedestal= 1;
-        name        = "FRONT";
+        info.name        = "FRONT";
         break;
     case CameraSet::BOTTOM:
-        pos         = Vector3f(0.0, -dis, 0.0);
-        target      = Vector3f(0.0, 0.0, 0.0);
-        up          = Vector3f(0.0, 1.0, 0.0);
+        info.pos         = Vector3f(0.0, -dis, 0.0);
+        info.target      = Vector3f(0.0, 0.0, 0.0);
+        info.up          = Vector3f(0.0, 1.0, 0.0);
         axysDolly   = 1;
         axysTrack   = 0;
         axysPedestal= 2;
-        name        = "BOTTOM";
+        info.name        = "BOTTOM";
         break;
     }
-    near        = 0.1;
-    far         = 100;
+    info.near        = -10;
+    info.far         = 10;
+
+    defaultInfo = info;
 }

@@ -14,15 +14,7 @@
 
 using namespace std;
 using namespace Eigen;
-struct cameraInfo{
-
-};
-
-class Camera
-{
-public:
-    Camera();
-
+struct CameraInfo{
     Vector3f    pos;
     Vector3f    target;
     Vector3f    up;
@@ -39,6 +31,15 @@ public:
     float       fov;
     float       near;
     float       far;
+};
+
+class Camera
+{
+public:
+    Camera();
+
+    CameraInfo info;
+    CameraInfo defaultInfo;
 
     void setPos(float _x, float _y, float _z);
     void setTarget(float _x, float _y, float _z);
