@@ -4,7 +4,7 @@
 Camera::Camera()
 {
     Camera::configCam();
-    name = "Perspective";
+    name = "PERSPECTIVE";
     //type = CameraSet::PERSPECTIVE;
 }
 

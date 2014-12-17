@@ -6,17 +6,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    glWidget = ui->widget;
+//    glWidget= new Glwidget(this);
+//    glWidget->show();
 
-    glWidget= new Glwidget(this);
-    glWidget->show();
-
-    label = new QLabel(this);
-
-    Interface::viewPortLabel = label;
+    //label = new QLabel(this);
+    Interface::viewPortLabel = ui->label;
     CameraSet::changeCam(CameraSet::LEFT);
-//    label->show();
-//    label->setText("  Perspective");
-//    label->setText("  Front");
 }
 
 MainWindow::~MainWindow()

@@ -48,7 +48,7 @@ void CameraSet::changeCam(int cam)
     Interface::viewPortLabel->clear();
 
     //QApplication::processEvents();
-    Interface::viewPortLabel->setText("   " + CameraSet::currentCamera->name);
+    Interface::viewPortLabel->setText(CameraSet::currentCamera->name);
 
 }
 

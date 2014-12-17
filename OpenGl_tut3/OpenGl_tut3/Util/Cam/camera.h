@@ -14,10 +14,15 @@
 
 using namespace std;
 using namespace Eigen;
+struct cameraInfo{
+
+};
+
 class Camera
 {
 public:
     Camera();
+
     Vector3f    pos;
     Vector3f    target;
     Vector3f    up;
