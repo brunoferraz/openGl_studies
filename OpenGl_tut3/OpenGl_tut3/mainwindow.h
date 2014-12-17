@@ -11,6 +11,7 @@
 #include <Util/keyboard.h>
 #include <Util/Cam/cameraset.h>
 #include <Display/interface.h>
+#include <QApplication>
 
 namespace Ui {
 class MainWindow;

@@ -22,7 +22,7 @@
 #include <QKeyEvent>
 #include <Display/Object3d/object3d.h>
 #include <Display/Object3d/tetrahedron.h>
-#include <Display/InterfaceElements/grid.h>
+#include <Display/Object3d/InterfaceElements/grid.h>
 #include <Display/interface.h>
 
 class Glwidget : public QGLWidget

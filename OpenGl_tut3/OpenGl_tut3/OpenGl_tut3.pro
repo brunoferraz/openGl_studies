@@ -23,7 +23,7 @@ SOURCES += main.cpp\
     Display/Object3d/cube.cpp \
     Display/Object3d/tetrahedron.cpp \
     Display/Object3d/sphere.cpp \
-    Display/InterfaceElements/grid.cpp \
+    Display/Object3d/InterfaceElements/grid.cpp \
     Util/keyboard.cpp \
     Display/interface.cpp
 
@@ -43,7 +43,7 @@ HEADERS  += mainwindow.h \
     Display/Object3d/cube.h \
     Display/Object3d/tetrahedron.h \
     Display/Object3d/sphere.h \
-    Display/InterfaceElements/grid.h \
+    Display/Object3d/InterfaceElements/grid.h \
     Util/keyboard.h \
     Display/interface.h
 

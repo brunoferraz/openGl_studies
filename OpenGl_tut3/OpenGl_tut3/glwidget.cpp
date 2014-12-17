@@ -15,7 +15,7 @@ void Glwidget::initializeGL()
     glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
     glShadeModel(GL_SMOOTH);
-    glEnable(GL_COLOR_MATERIAL);
+    //glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_TEXTURE_2D);
 
     glEnable(GL_LINE_SMOOTH);
@@ -23,7 +23,7 @@ void Glwidget::initializeGL()
     GLfloat light_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat light_position[] = { 1.0, 20.0, 0.0, 0.0 };
+    GLfloat light_position[] = { 1.0, 10.0, 0.0, 0.0 };
 
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
@@ -31,15 +31,13 @@ void Glwidget::initializeGL()
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-//    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION,    2.0);
-//    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION,      1.0);
-//    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION,   0.5);
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION,    2.0);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION,      1.0);
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION,   1.0);
 
     qglClearColor(Qt::black);
 
-
     glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
-
 
     CameraSet::init(this->width(), this->height());
     configScreen(this->width(), this->height());

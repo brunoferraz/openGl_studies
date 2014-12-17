@@ -1,5 +1,6 @@
 #include "cameraset.h"
 #include <Display/interface.h>
+#include <QApplication>
 
 CameraSet::CameraSet()
 {
@@ -43,7 +44,12 @@ void CameraSet::changeCam(int cam)
     currentCamera = nextCam;
     currentCamera->init();
     currentCamera->configScreen();
-    //Interface::viewPortLabel->setText(currentCamera->name);
+
+    Interface::viewPortLabel->clear();
+
+    //QApplication::processEvents();
+    Interface::viewPortLabel->setText("   " + CameraSet::currentCamera->name);
+
 }
 
 void CameraSet::init(int w, int h)

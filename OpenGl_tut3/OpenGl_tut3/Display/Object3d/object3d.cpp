@@ -28,25 +28,13 @@ void Object3d::display()
            j= i->facet_begin();
            // Facets in polyhedral surfaces are at least triangles.
            CGAL::Vector_3<Kernel> fnormal = i->plane().orthogonal_vector();
-                       //glNormal3f (fnormal[0],fnormal[1],fnormal[2]);
-           //std::cout << fnormal << std::endl;
+           Vector3f vn;
+           vn << fnormal[0],fnormal[1],fnormal[2];
+           vn.normalize();
+           glNormal3f (vn(0), vn(1), vn(2));
            CGAL_assertion( CGAL::circulator_size(j) >= 3 );
-           QList<Vector3f> pointList;
            do {
                Point_3 *p = &j->vertex()->point();
-               Vector3f pt;
-               pt << p->x(), p->y(), p->z();
-               pointList.push_back(pt);
-           } while ( ++j != i->facet_begin());
-
-           Vector3f va = pointList.at(1) - pointList.at(0);
-           Vector3f vb = pointList.at(2) - pointList.at(1);
-           Vector3f n = va.cross(vb);
-           //std::cout << n.transpose() << std::endl;
-           glNormal3f (n(0), n(1), n(2));
-           do {
-               Point_3 *p = &j->vertex()->point();
-
                glVertex3f(p->x(), p->y(), p->z());
            } while ( ++j != i->facet_begin());
        }

@@ -11,6 +11,7 @@
 #include <QKeyEvent>
 #include <Util/keyboard.h>
 #include <QGLWidget>
+#include <QLabel>
 
 class CameraSet
 {

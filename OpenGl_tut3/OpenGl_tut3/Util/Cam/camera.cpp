@@ -13,7 +13,6 @@ void Camera::setPos(float _x, float _y, float _z)
     pos(0) = _x;
     pos(1) = _y;
     pos(2) = _z;
-
 }
 
 void Camera::setTarget(float _x, float _y, float _z)
@@ -126,10 +125,12 @@ void Camera::configScreen(int w, int h)
     glLoadIdentity();
     float ratio     = viewPort_width/viewPort_height;
     gluPerspective(fov, ratio, near, far);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
     gluLookAt(pos(0),    pos(1),      pos(2),
               target(0), target(1),   target(2),
               up(0),     up(1),       up(2));
-    glMatrixMode(GL_MODELVIEW);
+
 
 }
 
