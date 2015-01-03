@@ -24,6 +24,8 @@
 #include <Display/Object3d/tetrahedron.h>
 #include <Display/Object3d/InterfaceElements/grid.h>
 #include <Display/interface.h>
+#include <QImage>
+#include <QGLFramebufferObject>
 
 class Glwidget : public QGLWidget
 {
@@ -44,12 +46,14 @@ public:
     void wheelEvent(QWheelEvent *ev);
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);
-    //void keyPressEvent(QKeyEvent *ev);
-    //void keyReleaseEvent(QKeyEvent *ev);
 
-    Vector3f cameraPos;
-    Object3d *obj;
-    Object3d *grid;
+    void update();
+
+    Vector3f            cameraPos;
+    Object3d            *obj;
+    Object3d            *grid;
+
+    QGLFramebufferObject *fbo;
 
 signals:
 

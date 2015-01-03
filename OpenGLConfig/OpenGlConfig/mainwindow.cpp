@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     GlWidget *wid = new GlWidget(this);
-    wid->show();
+    //wid->show();
 }
 
 MainWindow::~MainWindow()

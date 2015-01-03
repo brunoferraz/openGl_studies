@@ -5,9 +5,8 @@ Glwidget::Glwidget(QWidget *parent) :
     QGLWidget(parent)
 {
     this->resize(this->parentWidget()->width(), this->parentWidget()->height());
-    //cameraSet.canvas = this;
-    //MainWindow* main= this->parent();
-    //Interface::viewPortLabel = main->label;
+
+    //fbo = QGLFramebufferObject(this->width(), this->height());
 }
 
 void Glwidget::initializeGL()
@@ -17,6 +16,7 @@ void Glwidget::initializeGL()
     glShadeModel(GL_SMOOTH);
     //glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_TEXTURE_2D);
+    glEnable(GL_CULL_FACE);
 
     glEnable(GL_LINE_SMOOTH);
 
@@ -48,7 +48,10 @@ void Glwidget::initializeGL()
 void Glwidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //fbo->bind();
     drawScene();
+    //fbo->release();
+    //swapBuffers();
 }
 
 void Glwidget::drawScene()
@@ -65,25 +68,27 @@ void Glwidget::configScreen(int w, int h)
 
 void Glwidget::mouseMoveEvent(QMouseEvent *ev)
 {
-    Mouse::setPos(ev->x(), ev->y());
-    CameraSet::mouseMove(ev);
-    CameraSet::currentCamera->configScreen(this->width(), this->height());
-    QGLWidget::update();
+    Interface::MouseMove(ev);
 }
 
 void Glwidget::wheelEvent(QWheelEvent *ev)
 {
-    CameraSet::mouseWheel(ev);
-    CameraSet::currentCamera->configScreen(this->width(), this->height());
-    QGLWidget::update();
+    Interface::mouseWheelEvent(ev);
 }
 
 void Glwidget::mousePressEvent(QMouseEvent *ev)
 {
-    Mouse::mousePress(ev);
+    Interface::mousePressEvent(ev);
 }
 
 void Glwidget::mouseReleaseEvent(QMouseEvent *ev)
 {
-    Mouse::mouseRelease(ev);
+    Interface::mouseReleaseEvent(ev);
+}
+
+void Glwidget::update()
+{
+    configScreen(this->width(), this->height());
+    QGLWidget::update();
+    QGLWidget::updateGL();
 }

@@ -7,9 +7,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     glWidget = ui->widget;
+    Interface::canvas = glWidget;
 
     Interface::viewPortLabel = ui->label;
-    CameraSet::changeCam(CameraSet::LEFT);
+    CameraSet::changeCam(CameraSet::PERSPECTIVE);
 }
 
 MainWindow::~MainWindow()
@@ -19,23 +20,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
-    //label->clear();
-    Keyboard::keyPress(ev);
-    CameraSet::keyBoardEvent();
-    glWidget->configScreen(glWidget->width(), glWidget->height());
-    glWidget->updateGL();
+    Interface::KeyboardPressEvent(ev);
+    update();
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *ev)
 {
-   Keyboard::keyRelease(ev);
+    Keyboard::keyRelease(ev);
+}
+
+void MainWindow::update()
+{
+    glWidget->configScreen(glWidget->width(), glWidget->height());
+    glWidget->updateGL();
+    QWidget::update();
 }
 
 void MainWindow::on_bResetCam_clicked()
 {
     CameraSet::currentCamera->resetCamera();
-    glWidget->configScreen(glWidget->width(), glWidget->height());
-    glWidget->updateGL();
+    update();
 }
 
 void MainWindow::on_bCameraControl_toggled(bool checked)

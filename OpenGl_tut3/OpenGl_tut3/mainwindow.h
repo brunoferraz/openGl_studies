@@ -32,12 +32,11 @@ public:
     void keyPressEvent(QKeyEvent *ev);
     void keyReleaseEvent(QKeyEvent *ev);
 
+    void update();
 private slots:
 
     void on_bResetCam_clicked();
-
     void on_bCameraControl_toggled(bool checked);
-
     void on_bShape_toggled(bool checked);
 
 private:
