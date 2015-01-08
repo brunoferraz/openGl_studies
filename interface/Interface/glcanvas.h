@@ -9,6 +9,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <QDebug>
+#include <View/viewport.h>
 
 using namespace std;
 class GLcanvas : public QGLWidget
@@ -16,9 +17,14 @@ class GLcanvas : public QGLWidget
     Q_OBJECT
 public:
     explicit GLcanvas(QWidget *parent = 0);
+    ViewPort viewPort;
+
     void initializeGL();
     void paintGL();
 
+    void mousePressEvent(QMouseEvent *ev);
+    void mouseReleaseEvent(QMouseEvent *ev);
+    void mouseMoveEvent(QMouseEvent *ev);
 signals:
 
 public slots:
