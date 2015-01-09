@@ -6,6 +6,9 @@
 GLcanvas::GLcanvas(QWidget *parent) :
     QGLWidget(parent)
 {
+    viewPort = new ViewPortOrto();
+//    viewPort = new ViewPort();
+
     Grid *g = new Grid();
     Interface::addChild(*g);
     Tetrahedron *o = new Tetrahedron();
@@ -27,7 +30,7 @@ void GLcanvas::initializeGL()
     glShadeModel(GL_SMOOTH);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_TEXTURE_2D);
-    glEnable(GL_CULL_FACE);
+//    glEnable(GL_CULL_FACE);
 
     glEnable(GL_LINE_SMOOTH);
 
@@ -50,7 +53,7 @@ void GLcanvas::initializeGL()
 
     glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
 
-    viewPort.config(this->width(), this->height());
+    viewPort->config(this->width(), this->height());
 }
 
 void GLcanvas::paintGL()

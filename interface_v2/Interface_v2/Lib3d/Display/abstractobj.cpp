@@ -35,8 +35,9 @@ void AbstractObj::setColor(float r, float g, float b, float a)
     color << r, g, b, a;
 }
 
-void AbstractObj::display()
+void AbstractObj::display(int mode)
 {
+    qDebug() << mode;
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();
@@ -44,11 +45,15 @@ void AbstractObj::display()
     TypeCast::EigenMatrixToGlMatrixF(transform, v);
     glLoadMatrixf(v);
     glColor4f(color(0), color(1), color(2), color(3));
-    namePolyhedron();
+//    if(mode == Interface::SELECT) {
+//        namePolyhedron();
+//    }
     glBegin(GL_TRIANGLES);
     for(int i = 0; i < list.length(); i++){
         GLfloat v[3] = {list.at(i)(0),list.at(i)(1),list.at(i)(2)};
-        nameVertex(i);
+//        if(mode == Interface::SELECT) {
+//            nameVertex(i);
+//        }
         glVertex3fv(v);
     }
     glEnd();
@@ -57,18 +62,18 @@ void AbstractObj::display()
 
 void AbstractObj::nameVertex(int n)
 {
-    if(Interface::tool == Tool::SELECT){
-        if(Interface::typeSel == TypeSel::VERTEX){
+    if(Interface::typeSel == TypeSel::VERTEX){
+            Vector4f v = TypeCast::indexToColor(n);
+            glColor3f(v(0), v(1), v(2));
             glLoadName(n);
-        }
-    }
+     }
 }
 
 void AbstractObj::namePolyhedron()
 {
-    if(Interface::tool == Tool::SELECT){
-        if(Interface::typeSel == TypeSel::POLYHEDRON){
+    if(Interface::typeSel == TypeSel::POLYHEDRON){
+            Vector4f v = TypeCast::indexToColor(id);
+//            glColor3f(v(0), v(1), v(2));
             glLoadName(id);
         }
-    }
 }

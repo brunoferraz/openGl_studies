@@ -12,13 +12,13 @@
 #include <View/viewport.h>
 #include <View/viewportorto.h>
 
-using namespace std;
 class GLcanvas : public QGLWidget
 {
     Q_OBJECT
 public:
     explicit GLcanvas(QWidget *parent = 0);
-    ViewPort* viewPort;
+
+    ViewPort *viewPort;
 
     void initializeGL();
     void paintGL();
@@ -26,6 +26,7 @@ public:
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);
     void mouseMoveEvent(QMouseEvent *ev);
+    void colorPicking(QMouseEvent *ev);
 signals:
 
 public slots:

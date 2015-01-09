@@ -14,12 +14,18 @@ class Interface
 public:
     Interface();
 
+    static int const RENDER = 0;
+    static int const SELECT = 1;
+
     static int tool;
     static int typeSel;
     static int selectedIndex;
     static GLcanvas *canvas;
 
     static QList<AbstractObj *> displayList;
+    static QList<AbstractObj *> uiList;
+    static void addUiChild(AbstractObj &o);
+    static void removeUiChild(AbstractObj &o);
     static void addChild(AbstractObj &o);
     static void removeChild(AbstractObj &o);
 
@@ -29,9 +35,10 @@ public:
     static void mouseRelease();
     static void mouseMove();
 
-    static void display();
+    static void display(int mode = 0);
     static void render();
 };
+
 class Mouse{
 public:
     static int const BUTTON_LEFT    = 0;

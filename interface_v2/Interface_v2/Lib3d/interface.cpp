@@ -7,6 +7,12 @@ Interface::Interface()
 
 }
 
+void Interface::addUiChild(AbstractObj &o)
+{
+    Interface::uiList.push_back(&o);
+    o.id = Interface::uiList.length();
+}
+
 void Interface::addChild(AbstractObj &o)
 {
     Interface::displayList.push_back(&o);
@@ -36,7 +42,7 @@ void Interface::mousePress()
 {
     if(Interface::tool == Tool::SELECT){
         //Mouse::hitPicking(int(Mouse::x), int(Mouse::y));
-        Mouse::colorPicking(Mouse::x, Mouse::y);
+        //Mouse::colorPicking(Mouse::x, Mouse::y);
     }
 }
 
@@ -50,10 +56,13 @@ void Interface::mouseMove()
 
 }
 
-void Interface::display()
+void Interface::display(int mode)
 {
     for(int i=0; i < Interface::displayList.length(); i++){
-         Interface::displayList.at(i)->display();
+         Interface::displayList.at(i)->display(mode);
+    }
+    for(int i=0; i < Interface::uiList.length(); i++){
+         Interface::uiList.at(i)->display(mode);
     }
 }
 
@@ -61,6 +70,7 @@ int Interface::tool             = Tool::SELECT;
 int Interface::typeSel          = TypeSel::POLYHEDRON;
 int Interface::selectedIndex    = 0;
 QList<AbstractObj *> Interface::displayList;
+QList<AbstractObj *> Interface::uiList;
 GLcanvas* Interface::canvas;
 
 
@@ -80,7 +90,7 @@ void Mouse::mouseMove(QMouseEvent *ev)
     Vector3f v;
     v<< Mouse::velY, Mouse::velX, 0;
     v.normalized();
-    //Interface::canvas->viewPort->rotate(2, v(0), v(1), v(2));
+    Interface::canvas->viewPort->rotate(2, v(0), v(1), v(2));
     Interface::canvas->update();
 }
 
@@ -100,7 +110,7 @@ void Mouse::mousePress(QMouseEvent *ev)
        break;
    }
    Interface::mousePress();
-   //Interface::canvas->update();
+   Interface::canvas->update();
 }
 void Mouse::mouseRelease(QMouseEvent *ev)
 {
@@ -118,75 +128,9 @@ void Mouse::mouseRelease(QMouseEvent *ev)
         break;
     }
     Interface::mouseRelease();
-  //  Interface::canvas->update();
-}
-
-void Mouse::hitPicking(int x, int y)
-{
-    GLuint selectBuffer[64] = {0};
-    glSelectBuffer(64, selectBuffer);
-
-    glRenderMode(GL_SELECT);
-    glInitNames();
-    glPushName(0);
-
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-
-    GLint vp[4];
-    glGetIntegerv(GL_VIEWPORT, vp);
-
-    gluPickMatrix((GLdouble) x, (GLdouble)vp[3]- y, 5.0, 5.0, vp);
-
-    Interface::canvas->viewPort->configProjection();
-    Interface::canvas->viewPort->configModelView();
-
-    //selectRender
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    glLoadIdentity();
-    Interface::canvas->paintGL();
-    //Interface::display();
-
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-
-//    glRenderMode(GL_RENDER);
-    int hits = glRenderMode(GL_RENDER); // Number of objects selected;
-    int next = selectBuffer[3]-1; // Object Selected.
-    if(next == -1){
-        if(Interface::hasSelected()){
-            Interface::selected()->deselect();
-        }
-        Interface::selectedIndex = next;
-    }else{
-        Interface::selectedIndex = next;
-        Interface::selected()->select();
-    }
-    std::cout << Interface::selectedIndex << std::endl;
-//    std::cout << hits << std::endl;
-    //normalRender
-    //Interface::display();
     Interface::canvas->update();
 }
 
-void Mouse::colorPicking(int x, int y)
-{
-    qDebug() << ">>>>";
-    glDisable(GL_DITHER);
-    Interface::canvas->paintGL();
-    glEnable(GL_DITHER);
-    GLint viewport[4];
-    GLubyte pixel[3];
-
-    glGetIntegerv(GL_VIEWPORT,viewport);
-
-    glReadPixels(x,viewport[3]-y,1,1,
-    GL_RGB,GL_UNSIGNED_BYTE,(void *)pixel);
-
-    qDebug() <<pixel[0] << " " << pixel[1] << " " << pixel[2];
-}
 bool Mouse::left        = false;
 bool Mouse::right       = false;
 bool Mouse::middle      = false;

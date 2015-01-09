@@ -48,12 +48,12 @@ void ViewPort::configModelView()
 
 void ViewPort::applyTransform()
 {
-//    GLfloat v[16];
-//    TypeCast::EigenMatrixToGlMatrixF(info.transform, v);
-//    glMultMatrixf(v);
-//    glRotatef(40, 1, 1, 0);
-//    glGetFloatv(GL_PROJECTION_MATRIX, v);
-//    TypeCast::GlMatrixFToEigenMatrix(v, info.transform);
+    GLfloat v[16];
+    TypeCast::EigenMatrixToGlMatrixF(info.transform, v);
+    glMultMatrixf(v);
+    glRotatef(40, 1, 1, 0);
+    glGetFloatv(GL_PROJECTION_MATRIX, v);
+    TypeCast::GlMatrixFToEigenMatrix(v, info.transform);
 }
 
 void ViewPort::rotate(float angle, float x, float y, float z)
