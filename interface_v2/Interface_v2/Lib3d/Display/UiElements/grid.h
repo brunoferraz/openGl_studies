@@ -6,7 +6,7 @@ class Grid: public AbstractObj
 {
 public:
     Grid();
-    void display();
+    void display(int mode=0); //for viewport
 };
 
 #endif // GRID_H

@@ -1,16 +1,19 @@
 #include "abstractobj.h"
 #include <Util/typecast.h>
 #include <Lib3d/interface.h>
+//#include <Eigen/OpenGLSupport>
 
 AbstractObj::AbstractObj()
 {
     id = 0;
-    color     <<    1,  1,  1,  1;
-
-    transform <<    1,  0,  0,  0,
-                    0,  1,  0,  0,
-                    0,  0,  1,  0,
-                    0,  0,  0,  1;
+    color       <<   1,  1,  1,  1;
+    difuse      <<   1,  1,  1,  1;
+    specular    <<   1,  1,  1,  1;
+    transform   <<      1,  0,  0,  0,
+                        0,  1,  0,  0,
+                        0,  0,  1,  0,
+                        0,  0,  0,  1;
+    shininess = 100;
 }
 
 void AbstractObj::select()
@@ -35,45 +38,42 @@ void AbstractObj::setColor(float r, float g, float b, float a)
     color << r, g, b, a;
 }
 
-void AbstractObj::display(int mode)
+void AbstractObj::configMaterial()
 {
-    qDebug() << mode;
+    GLfloat d[4];
+    TypeCast::EigenToGLfloat(difuse,d);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, d);
+
+    GLfloat s[4];
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, s);
+
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
+}
+
+void AbstractObj::configTransform()
+{
+    GLfloat t[16];
+    TypeCast::EigenMatrixToGlMatrixF(transform, t);
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();
-    GLfloat v[16];
-    TypeCast::EigenMatrixToGlMatrixF(transform, v);
-    glLoadMatrixf(v);
-    glColor4f(color(0), color(1), color(2), color(3));
-//    if(mode == Interface::SELECT) {
-//        namePolyhedron();
-//    }
-    glBegin(GL_TRIANGLES);
-    for(int i = 0; i < list.length(); i++){
-        GLfloat v[3] = {list.at(i)(0),list.at(i)(1),list.at(i)(2)};
-//        if(mode == Interface::SELECT) {
-//            nameVertex(i);
-//        }
-        glVertex3fv(v);
-    }
-    glEnd();
-    glPopMatrix();
+    glMultMatrixf(t);
+}
+
+void AbstractObj::display(int mode)
+{
+
 }
 
 void AbstractObj::nameVertex(int n)
 {
-    if(Interface::typeSel == TypeSel::VERTEX){
-            Vector4f v = TypeCast::indexToColor(n);
-            glColor3f(v(0), v(1), v(2));
-            glLoadName(n);
-     }
+
 }
 
 void AbstractObj::namePolyhedron()
 {
-    if(Interface::typeSel == TypeSel::POLYHEDRON){
-            Vector4f v = TypeCast::indexToColor(id);
-//            glColor3f(v(0), v(1), v(2));
-            glLoadName(id);
-        }
+    Vector4f v = TypeCast::indexToColor(id);
+    glColor4f(v(0), v(1), v(2), v(3));
+    //std::cout << v.transpose() << "  " << id  << std::endl;
+
 }

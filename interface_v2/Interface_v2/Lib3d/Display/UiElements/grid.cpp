@@ -4,7 +4,7 @@ Grid::Grid()
 {
 }
 
-void Grid::display()
+void Grid::display(int mode)
 {
     float step = 0.05;
     float alt   = -0.009;
@@ -27,7 +27,6 @@ void Grid::display()
             glVertex3d(i,   alt,    -1);
             glVertex3d(i,   alt,    1);
         }
-        glLineWidth(1);
         for(float i = -1; i <= 1; i+=step){
             glVertex3d(-1,   alt,   i);
             glVertex3d(1,   alt,    i);

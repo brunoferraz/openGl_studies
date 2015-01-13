@@ -12,6 +12,8 @@ GLWidget::GLWidget(QWidget *parent) :
 
 void GLWidget::initializeGL()
 {
+    setAutoBufferSwap(false);
+    glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
     qglClearColor(Qt::gray);
     glEnable(GL_DEPTH_TEST);
@@ -32,11 +34,17 @@ void GLWidget::paintGL()
 
     glMatrixMode(GL_MODELVIEW);
     drawScene();
+    swapBuffers();
 }
 
-void GLWidget::drawScene()
+void GLWidget::drawScene(int mode)
 {
     //glMatrixMode(GL_MODELVIEW);
+    if(mode == 1){
+        glDisable(GL_LIGHTING);
+    }else{
+        glEnable(GL_LIGHTING);
+    }
 
         glLoadName(7);
 //        glPushName(1);
@@ -77,7 +85,7 @@ void GLWidget::hitPicking(QMouseEvent *ev)
     gluOrtho2D(-1,1,-1,1);
 
     paintGL();
-    //drawScene();
+
 
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
@@ -90,7 +98,10 @@ void GLWidget::hitPicking(QMouseEvent *ev)
 void GLWidget::colorPicking(QMouseEvent *ev)
 {
     glDisable(GL_DITHER);
-    paintGL();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    drawScene(1);
+//    swapBuffers();
     glEnable(GL_DITHER);
 
     GLint viewport[4];

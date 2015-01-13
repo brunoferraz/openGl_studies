@@ -19,6 +19,7 @@
 #include <CGAL/Plane_3.h>
 
 #include <Display/UiElements/boundingbox.h>
+#include <Display/UiElements/axis.h>
 
 #include <QString>
 
@@ -51,6 +52,7 @@ public:
     BasicHedron();
     Polyhedron P;
     BoundingBox boundingBox;
+    Axis axis;
 
     void createBoundingBox();
     void display(int mode=0);

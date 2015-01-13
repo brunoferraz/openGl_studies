@@ -2,7 +2,7 @@
 
 BoundingBox::BoundingBox()
 {
-    color << 1 ,0 ,0 , 1;
+    color << 0.6 ,0.6 ,0.6 , 1;
 }
 
 void BoundingBox::createBoundingBox(Polyhedron& p)

@@ -43,7 +43,6 @@ void ViewPort::configProjection()
 void ViewPort::configModelView()
 {
 
-
 }
 
 void ViewPort::applyTransform()
@@ -58,6 +57,5 @@ void ViewPort::applyTransform()
 
 void ViewPort::rotate(float angle, float x, float y, float z)
 {
-
     glRotatef(angle, x, y, z);
 }

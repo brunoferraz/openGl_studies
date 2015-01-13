@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     Lib3d/Display/Primitives/basichedron.cpp \
     Lib3d/Display/Primitives/tetrahedron.cpp \
     Lib3d/Display/UiElements/boundingbox.cpp \
-    Lib3d/Display/UiElements/grid.cpp
+    Lib3d/Display/UiElements/grid.cpp \
+    Lib3d/Display/UiElements/axis.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     Lib3d/Display/Primitives/basichedron.h \
     Lib3d/Display/Primitives/tetrahedron.h \
     Lib3d/Display/UiElements/boundingbox.h \
-    Lib3d/Display/UiElements/grid.h
+    Lib3d/Display/UiElements/grid.h \
+    Lib3d/Display/UiElements/axis.h
 
 
 FORMS    += mainwindow.ui

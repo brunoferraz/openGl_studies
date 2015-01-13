@@ -37,7 +37,15 @@ Vector4f TypeCast::indexToColor(int i)
     return v;
 }
 
-int TypeCast::colotToIndex(int r, int g, int b)
+int TypeCast::colorToIndex(int r, int g, int b)
 {
     return (r)|(g<<8)|(b<<16);
+}
+
+void TypeCast::EigenToGLfloat(Vector4f a, GLfloat (&b)[4])
+{
+    int total = 4;
+    for(int i= 0; i < total; i++){
+        b[i] = a(i);
+    }
 }

@@ -16,11 +16,14 @@ class AbstractObj
 public:
     AbstractObj();
 
-    int              id;
-    Matrix4f         transform;
-    QList<Vector3f>  list;
-    bool             selected;
-    Vector4f         color;
+    int                 id;
+    Matrix4f            transform;
+    QList<Vector3f>     list;
+    bool                selected;
+    Vector4f            color;
+    Vector4f            difuse;
+    Vector4f            specular;
+    float               shininess;
 
     //Selection
     virtual void select();
@@ -37,6 +40,10 @@ public:
 
     virtual void setPos(float x =0, float y=0, float z=0);
     virtual void setColor(float r=1, float g=1, float b=1, float a=1);
+
+     void configMaterial();
+
+     void configTransform();
 
     //Maybe quality diference
      void render(); //for export

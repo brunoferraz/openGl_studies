@@ -12,6 +12,7 @@
 #include <View/viewport.h>
 #include <View/viewportorto.h>
 
+using namespace QGL;
 class GLcanvas : public QGLWidget
 {
     Q_OBJECT
@@ -20,8 +21,12 @@ public:
 
     ViewPort *viewPort;
 
+    bool pickingmode;
+    float angleX;
+
     void initializeGL();
     void paintGL();
+
 
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);

@@ -30,10 +30,13 @@ public:
     static void removeChild(AbstractObj &o);
 
     static AbstractObj* selected();
+    static void selectObject(int i);
     static bool hasSelected();
     static void mousePress();
     static void mouseRelease();
     static void mouseMove();
+
+    static void setMouseTracking(bool b);
 
     static void display(int mode = 0);
     static void render();
@@ -41,9 +44,9 @@ public:
 
 class Mouse{
 public:
-    static int const BUTTON_LEFT    = 0;
-    static int const BUTTON_RIGHT   = 1;
-    static int const BUTTON_MIDDLE  = 2;
+    static int const BUTTON_LEFT    = 1;
+    static int const BUTTON_RIGHT   = 2;
+    static int const BUTTON_MIDDLE  = 4;
 
     static bool left;
     static bool right;

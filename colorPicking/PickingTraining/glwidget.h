@@ -15,7 +15,7 @@ public:
     void initializeGL();
     void paintGL();
 
-    void drawScene();
+    void drawScene(int mode =0);
 
     void mouseReleaseEvent(QMouseEvent *ev);
     void hitPicking(QMouseEvent *ev);

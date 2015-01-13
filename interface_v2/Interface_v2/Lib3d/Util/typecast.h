@@ -16,7 +16,9 @@ public:
     static void GlMatrixFToEigenMatrix(GLfloat a[16], Matrix4f &b);
 
     static Vector4f indexToColor(int i);
-    static int colotToIndex(int r, int g, int b);
+    static int colorToIndex(int r, int g, int b);
+
+    static void EigenToGLfloat(Vector4f a, GLfloat (&b)[4]);
 };
 
 #endif // TYPECAST_H

@@ -29,6 +29,26 @@ AbstractObj* Interface::selected()
     }
 }
 
+void Interface::selectObject(int i)
+{
+    int next = i-1;
+    if(next == -1 || next >= Interface::displayList.length()){
+        //deselect object
+        if(Interface::hasSelected()){
+            Interface::selected()->deselect();
+            Interface::selectedIndex = -1;
+        }
+    }else{
+        if(hasSelected()){
+            //deselect object
+            Interface::selected()->deselect();
+        }
+        //select object
+        Interface::selectedIndex = i-1;
+        Interface::selected()->select();
+    }
+}
+
 bool Interface::hasSelected()
 {
     if(Interface::selectedIndex == -1){
@@ -40,6 +60,8 @@ bool Interface::hasSelected()
 
 void Interface::mousePress()
 {
+//    qDebug() << "pressiona";
+//    qDebug() << Mouse::left;
     if(Interface::tool == Tool::SELECT){
         //Mouse::hitPicking(int(Mouse::x), int(Mouse::y));
         //Mouse::colorPicking(Mouse::x, Mouse::y);
@@ -51,9 +73,20 @@ void Interface::mouseRelease()
 
 }
 
+void Interface::setMouseTracking(bool b)
+{
+    Interface::canvas->setMouseTracking(b);
+}
+
 void Interface::mouseMove()
 {
-
+    if(Mouse::left){
+        Vector3f v;
+        v<< Mouse::velY, Mouse::velX, 0;
+        v.normalized();
+        Interface::canvas->viewPort->rotate(2, v(0), v(1), v(2));
+        Interface::canvas->update();
+    }
 }
 
 void Interface::display(int mode)
@@ -61,9 +94,11 @@ void Interface::display(int mode)
     for(int i=0; i < Interface::displayList.length(); i++){
          Interface::displayList.at(i)->display(mode);
     }
+    glDisable(GL_LIGHTING);
     for(int i=0; i < Interface::uiList.length(); i++){
          Interface::uiList.at(i)->display(mode);
     }
+    glEnable(GL_LIGHTING);
 }
 
 int Interface::tool             = Tool::SELECT;
@@ -72,7 +107,6 @@ int Interface::selectedIndex    = 0;
 QList<AbstractObj *> Interface::displayList;
 QList<AbstractObj *> Interface::uiList;
 GLcanvas* Interface::canvas;
-
 
 void Mouse::setPos(float _x, float _y)
 {
@@ -87,15 +121,13 @@ void Mouse::setPos(float _x, float _y)
 void Mouse::mouseMove(QMouseEvent *ev)
 {
     Mouse::setPos(ev->x(),ev->y());
-    Vector3f v;
-    v<< Mouse::velY, Mouse::velX, 0;
-    v.normalized();
-    Interface::canvas->viewPort->rotate(2, v(0), v(1), v(2));
-    Interface::canvas->update();
+    Interface::mouseMove();
 }
 
 void Mouse::mousePress(QMouseEvent *ev)
 {
+   Mouse::setPos(ev->x(), ev->y());
+   //qDebug() << ev->button();
    switch(ev->button()){
     case Mouse::BUTTON_LEFT:
        Mouse::left = true;
@@ -110,10 +142,11 @@ void Mouse::mousePress(QMouseEvent *ev)
        break;
    }
    Interface::mousePress();
-   Interface::canvas->update();
+   //Interface::canvas->update();
 }
 void Mouse::mouseRelease(QMouseEvent *ev)
 {
+    Mouse::setPos(ev->x(), ev->y());
     switch(ev->button()){
      case Mouse::BUTTON_LEFT:
         Mouse::left = false;
@@ -128,7 +161,7 @@ void Mouse::mouseRelease(QMouseEvent *ev)
         break;
     }
     Interface::mouseRelease();
-    Interface::canvas->update();
+    //Interface::canvas->update();
 }
 
 bool Mouse::left        = false;
