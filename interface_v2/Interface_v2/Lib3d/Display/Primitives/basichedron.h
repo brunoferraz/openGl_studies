@@ -52,10 +52,12 @@ public:
     BasicHedron();
     Polyhedron P;
     BoundingBox boundingBox;
-    Axis axis;
+    Axis3d axis;
 
     void createBoundingBox();
     void display(int mode=0);
+    void displayObject(int mode=0);
+    void displayGizmos(int mode=0);
 };
 
 #endif // BASICHEDRON_H

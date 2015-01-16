@@ -8,23 +8,44 @@ BasicHedron::BasicHedron()
 
 void BasicHedron::display(int mode)
 {
-   if(mode == Interface::SELECT){
-//       qDebug() << "selecionando";
-       namePolyhedron();
-   }else if(mode == Interface::RENDER){
-//       qDebug() << "renderizando";
-       glColor4f(color(0), color(1), color(2), color(3));
-   }
-   configMaterial();
+    glColor4f(color(0), color(1), color(2), color(3));
+    configMaterial();
+    GLfloat t[16];
+    TypeCast::EigenMatrixToGlMatrixF(transform, t);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(t);
 
-   GLfloat t[16];
-   TypeCast::EigenMatrixToGlMatrixF(transform, t);
-   glMatrixMode(GL_MODELVIEW);
-   glPushMatrix();
-   //glLoadIdentity();
-   glMultMatrixf(t);
+    if(selected){
+        if(mode == Interface::RENDER){
+            //RENDER
+            //display object
+            displayObject(mode);
+            //display gizmos
+            displayGizmos(mode);
+        }else if(mode == Interface::SELECT){
+            //SELECT
+            //display gizmo
+            displayGizmos(mode);
+        }
+    }else{
+        if(mode == Interface::RENDER){
+            //RENDER
+            //display object
+            displayObject(mode);
+        }else if(mode == Interface::SELECT){
+            //SELECT
+            //change color
+            namePolyhedron();
+            //display object
+            displayObject(mode);
+        }
+    }
+    glPopMatrix();
+}
 
-
+void BasicHedron::displayObject(int mode)
+{
     std::transform( P.facets_begin(), P.facets_end(), P.planes_begin(),Plane_from_facet());
     glBegin(GL_TRIANGLES);
         CGAL::set_ascii_mode( std::cout);
@@ -47,14 +68,14 @@ void BasicHedron::display(int mode)
             } while ( ++j != i->facet_begin());
         }
     glEnd();
+}
 
-    if(selected){
-        glDisable(GL_LIGHTING);
+void BasicHedron::displayGizmos(int mode)
+{
+    glDisable(GL_LIGHTING);
+    if(mode == Interface::RENDER){
         boundingBox.display();
-        axis.display();
-        glEnable(GL_LIGHTING);
     }
-
-
-    glPopMatrix();
+    axis.display(mode);
+    glEnable(GL_LIGHTING);
 }

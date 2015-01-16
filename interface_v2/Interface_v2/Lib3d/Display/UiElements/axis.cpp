@@ -2,71 +2,86 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <GL/freeglut.h>
+#include <Util/typecast.h>
+#include <interface.h>
 
-Axis::Axis()
+Axis3d::Axis3d()
 {
-    xColorIdle [0] = 0.4;
-    xColorIdle [1] = 0;
-    xColorIdle [2] = 0;
+    xAxis.setColor(1, 0, 0, 1);
+    xAxis.setAngle(0, 1, 0, 0);
+    xAxis.id = 1;
+    xAxis.selected = false;
+    xAxis.mouseOver = false;
+    list.push_back(xAxis);
 
-    xColorSelected[0] = 1;
-    xColorSelected[1] = 0;
-    xColorSelected[2] = 0;
+    yAxis.setColor(0, 1, 0, 1);
+    yAxis.setAngle(90, 0, 0, 1);
+    yAxis.id = 2;
+    yAxis.selected = false;
+    yAxis.mouseOver = false;
+    list.push_back(yAxis);
 
-    yColorIdle [0] = 0;
-    yColorIdle [1] = 0.4;
-    yColorIdle [2] = 0;
-
-    yColorSelected[0] = 0;
-    yColorSelected[1] = 1;
-    yColorSelected[2] = 0;
-
-    zColorIdle [0] = 0;
-    zColorIdle [1] = 0;
-    zColorIdle [2] = 0.4;
-
-    zColorSelected[0] = 0;
-    zColorSelected[1] = 0;
-    zColorSelected[2] = 1;
+    zAxis.setColor(0, 0, 1, 1);
+    zAxis.setAngle(-90,0, 1, 0);
+    zAxis.id = 3;
+    zAxis.selected = false;
+    zAxis.mouseOver = false;
+    list.push_back(zAxis);
 }
 
-void Axis::display()
+void Axis3d::display(int mode)
 {
+    xAxis.display(mode);
+    yAxis.display(mode);
+    zAxis.display(mode);
+}
+
+void Axis::setColor(float r, float g, float b, float a)
+{
+    float factor = 3;
+    colorSelected[0] = r;
+    colorSelected[1] = g;
+    colorSelected[2] = b;
+    colorSelected[3] = a;
+    colorIdle[0] = r/ factor;
+    colorIdle[1] = g/ factor;
+    colorIdle[2] = b/ factor;
+    colorIdle[3] = a/ factor;
+}
+
+void Axis::setAngle(int ang, float x, float y, float z)
+{
+    angle = ang;
+    angleVec[0] = x;
+    angleVec[1] = y;
+    angleVec[2] = z;
+}
+
+void Axis::display(int mode)
+{
+    //TRANSLATE AXIS
     GLfloat c[3] = {0, 0, 0};
     glLineWidth(3);
-
-    glBegin(GL_LINES);
-        glColor3fv(xColorIdle);
-        glVertex3fv(c);
-        glVertex3f(1, 0, 0);
-
-        glColor3fv(yColorIdle);
-        glVertex3fv(c);
-        glVertex3f(0, 1, 0);
-
-        glColor3fv(zColorIdle);
-        glVertex3fv(c);
-        glVertex3f(0, 0, 1);
-    glEnd();
+    Vector4f color;
+    if(mode == Interface::RENDER){
+        color = colorIdle;
+    }else if(mode == Interface::SELECT){
+        color = TypeCast::indexToColor(id);
+    }
 
     glPushMatrix();
-    glColor3fv(xColorIdle);
-    glTranslatef(1, 0, 0);
-    glRotatef(90, 0, 1, 0);
-    glutSolidCone(0.05, 0.2, 8, 2);
+    glRotatef(angle, angleVec[0], angleVec[1], angleVec[2]);
+        glBegin(GL_LINES);
+            glColor3fv(color.data());
+            glVertex3fv(c);
+            glVertex3f(1, 0, 0);
+        glEnd();
+        glPushMatrix();
+        glTranslatef(1, 0, 0);
+        glRotatef(90, 0, 1, 0);
+            glColor3fv(color.data());
+            glutSolidCone(0.05, 0.2, 8, 2);
+        glPopMatrix();
     glPopMatrix();
-
-    glPushMatrix();
-    glColor3fv(yColorIdle);
-    glTranslatef(0, 1, 0);
-    glRotatef(-90, 1, 0, 0);
-    glutSolidCone(0.05, 0.2, 8, 2);
-    glPopMatrix();
-
-    glPushMatrix();
-    glColor3fv(zColorIdle);
-    glTranslatef(0, 0, 1);
-    glRotatef(90, 0, 0, 1);
-    glutSolidCone(0.05, 0.2, 8, 2);
-    glPopMatrix();
+    //ROTATE AND SCALE AXIS
 }

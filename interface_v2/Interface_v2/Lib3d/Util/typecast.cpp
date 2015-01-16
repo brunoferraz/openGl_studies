@@ -49,3 +49,11 @@ void TypeCast::EigenToGLfloat(Vector4f a, GLfloat (&b)[4])
         b[i] = a(i);
     }
 }
+
+void TypeCast::copyColor(GLfloat (&a)[4], GLfloat (&b)[4])
+{
+    b[0] = a[0];
+    b[1] = a[1];
+    b[2] = a[2];
+    b[3] = a[3];
+}

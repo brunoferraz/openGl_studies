@@ -31,10 +31,14 @@ public:
 
     static AbstractObj* selected();
     static void selectObject(int i);
+
+    static void selectAxis(int i);
+
     static bool hasSelected();
     static void mousePress();
     static void mouseRelease();
     static void mouseMove();
+
 
     static void setMouseTracking(bool b);
 

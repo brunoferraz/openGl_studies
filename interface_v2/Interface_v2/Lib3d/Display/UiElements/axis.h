@@ -2,23 +2,36 @@
 #define AXIS_H
 
 #include <Display/abstractobj.h>
+#include <Eigen/Dense>
 #include <GL/gl.h>
+#include <QList>
+class Axis{
+public:
+    Vector4f colorIdle;
+    Vector4f colorSelected;
+    float angle;
+    float angleVec[3];
+    void setColor(float r, float g, float b, float a);
+    void setAngle(int ang, float x, float y, float z);
+    void display(int mode=0);
+    int id;
 
+    bool selected;
+    bool mouseOver;
+};
 
-class Axis : public AbstractObj
+class Axis3d : public AbstractObj
 {
 public:
-    Axis();
-    GLfloat xColorIdle[3];
-    GLfloat xColorSelected[3];
+    Axis3d();
 
-    GLfloat yColorIdle[3];
-    GLfloat yColorSelected[3];
+    Axis xAxis;
+    Axis yAxis;
+    Axis zAxis;
 
-    GLfloat zColorIdle[3];
-    GLfloat zColorSelected[3];
+    QList<Axis> list;
 
-    void display();
+    void display(int mode=0);
 };
 
 #endif // AXIS_H

@@ -47,6 +47,12 @@ void Interface::selectObject(int i)
         Interface::selectedIndex = i-1;
         Interface::selected()->select();
     }
+    Interface::setMouseTracking(Interface::hasSelected());
+}
+
+void Interface::selectAxis(int i)
+{
+
 }
 
 bool Interface::hasSelected()
@@ -60,8 +66,6 @@ bool Interface::hasSelected()
 
 void Interface::mousePress()
 {
-//    qDebug() << "pressiona";
-//    qDebug() << Mouse::left;
     if(Interface::tool == Tool::SELECT){
         //Mouse::hitPicking(int(Mouse::x), int(Mouse::y));
         //Mouse::colorPicking(Mouse::x, Mouse::y);
@@ -80,7 +84,7 @@ void Interface::setMouseTracking(bool b)
 
 void Interface::mouseMove()
 {
-    if(Mouse::left){
+    if(Mouse::middle){
         Vector3f v;
         v<< Mouse::velY, Mouse::velX, 0;
         v.normalized();
@@ -94,11 +98,13 @@ void Interface::display(int mode)
     for(int i=0; i < Interface::displayList.length(); i++){
          Interface::displayList.at(i)->display(mode);
     }
-    glDisable(GL_LIGHTING);
-    for(int i=0; i < Interface::uiList.length(); i++){
-         Interface::uiList.at(i)->display(mode);
+    if(mode == Interface::RENDER){
+        glDisable(GL_LIGHTING);
+        for(int i=0; i < Interface::uiList.length(); i++){
+             Interface::uiList.at(i)->display(mode);
+        }
+        glEnable(GL_LIGHTING);
     }
-    glEnable(GL_LIGHTING);
 }
 
 int Interface::tool             = Tool::SELECT;

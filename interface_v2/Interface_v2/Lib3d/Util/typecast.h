@@ -19,6 +19,7 @@ public:
     static int colorToIndex(int r, int g, int b);
 
     static void EigenToGLfloat(Vector4f a, GLfloat (&b)[4]);
+    static void copyColor(GLfloat (&a)[4], GLfloat (&b)[4]);
 };
 
 #endif // TYPECAST_H

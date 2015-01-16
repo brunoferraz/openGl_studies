@@ -75,5 +75,4 @@ void AbstractObj::namePolyhedron()
     Vector4f v = TypeCast::indexToColor(id);
     glColor4f(v(0), v(1), v(2), v(3));
     //std::cout << v.transpose() << "  " << id  << std::endl;
-
 }

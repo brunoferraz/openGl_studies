@@ -77,8 +77,8 @@ void GLcanvas::paintGL()
         Interface::display(Interface::SELECT);
     }else{
         Interface::display(Interface::RENDER);
+        swapBuffers();
     }
-    swapBuffers();
 }
 
 void GLcanvas::mousePressEvent(QMouseEvent *ev)
@@ -95,6 +95,9 @@ void GLcanvas::mouseReleaseEvent(QMouseEvent *ev)
 void GLcanvas::mouseMoveEvent(QMouseEvent *ev)
 {
     Mouse::mouseMove(ev);
+    if(Interface::hasSelected()){
+        colorPicking(ev);
+    }
 }
 
 void GLcanvas::colorPicking(QMouseEvent *ev)
@@ -113,10 +116,13 @@ void GLcanvas::colorPicking(QMouseEvent *ev)
     glReadPixels(ev->x(),viewport[3]-ev->y(),1,1,
     GL_RGB,GL_UNSIGNED_BYTE,(void *)pixel);
 
-//    qDebug() <<pixel[0] << " " << pixel[1] << " " << pixel[2];
-
+    qDebug() <<pixel[0] << " " << pixel[1] << " " << pixel[2];
     int next = TypeCast::colorToIndex(pixel[0], pixel[1], pixel[2]);
-    Interface::selectObject(next);
+    if(ev->type() == QEvent::MouseButtonPress){
+        Interface::selectObject(next);
+    }else if(ev->type() == QEvent::MouseMove){
+        Interface::selectAxis(next);
+    }
     pickingmode = false;
     glEnable(GL_DITHER);
     glEnable(GL_LIGHTING);
