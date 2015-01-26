@@ -64,5 +64,7 @@ void ViewPort::rotate(float angle, float x, float y, float z)
 
 Eigen::Vector3f ViewPort::getTranslateFromScreen(float x, float y)
 {
-
+    Eigen::Vector3f nPos;
+    nPos << x, -y, y;
+    return nPos;
 }

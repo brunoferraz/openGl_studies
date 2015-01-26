@@ -10,6 +10,8 @@ public:
     void configProjection();
     void configModelView();
     void applyTransform();
+
+    virtual Eigen::Vector3f getTranslateFromScreen(float x, float y);
 };
 
 #endif // VIEWPORTORTO_H

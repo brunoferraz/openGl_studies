@@ -5,7 +5,7 @@
 #include <QString>
 #include <GL/gl.h>
 #include <GL/glu.h>
-
+#include <QDebug>
 //using namespace Eigen;
 struct CameraInfo{
     Eigen::Matrix4f    transform;
@@ -35,7 +35,7 @@ public:
     virtual void applyTransform();
     void rotate(float angle, float x, float y, float z);
 
-    Eigen::Vector3f getTranslateFromScreen(float x, float y);
+    virtual Eigen::Vector3f getTranslateFromScreen(float x, float y);
 };
 
 #endif // VIEWPORT_H

@@ -39,27 +39,21 @@ void TranslateTool::mouseRelease()
 void TranslateTool::mouseMove()
 {
     if(dragAndDrop){
+        Eigen::Vector3f oldPos;
+        oldPos << Interface::tool.getTarget()->getX(),
+                Interface::tool.getTarget()->getY(),
+                Interface::tool.getTarget()->getZ();
+        Eigen::Vector3f nPos;
+        nPos = Interface::view.getTranslateFromScreen(Mouse::velX, Mouse::velY);
+        nPos = nPos/100 + oldPos;
         if(axis.xAxis.selected){
-            Eigen::Vector3f nPos;
-            nPos = Interface::view.getTranslateFromScreen(Mouse::velX, Mouse::velY);
-//            nPos << Interface::tool.getTarget()->getX() + Mouse::velX/100,
-//                    Interface::tool.getTarget()->getY(),
-//                    Interface::tool.getTarget()->getZ();
-            Interface::tool.getTarget()->setPos(nPos(0), nPos(1), nPos(2));
+            Interface::tool.getTarget()->setPos(nPos(0), oldPos(1), oldPos(2));
         }
         if(axis.yAxis.selected){
-            Eigen::Vector3f nPos;
-//            nPos << Interface::tool.getTarget()->getX(),
-//                    Interface::tool.getTarget()->getY()- Mouse::velY/100,
-//                    Interface::tool.getTarget()->getZ();
-//            Interface::tool.getTarget()->setPos(nPos(0), nPos(1), nPos(2));
+            Interface::tool.getTarget()->setPos(oldPos(0), nPos(1), oldPos(2));
         }
         if(axis.zAxis.selected){
-            Eigen::Vector3f nPos;
-//            nPos << Interface::tool.getTarget()->getX(),
-//                    Interface::tool.getTarget()->getY(),
-//                    Interface::tool.getTarget()->getZ()+ Mouse::velY/100;
-//            Interface::tool.getTarget()->setPos(nPos(0), nPos(1), nPos(2));
+            Interface::tool.getTarget()->setPos(oldPos(0), oldPos(1), nPos(2));
         }
     }
 }

@@ -23,3 +23,10 @@ void ViewPortOrto::applyTransform()
 {
 
 }
+
+Eigen::Vector3f ViewPortOrto::getTranslateFromScreen(float x, float y)
+{
+    Eigen::Vector3f nPos;
+    nPos << x, -y, 0;
+    return nPos;
+}

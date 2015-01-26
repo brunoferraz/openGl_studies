@@ -9,6 +9,7 @@ public:
     ViewPortOrtoLeft();
 
     void configProjection();
+    Eigen::Vector3f getTranslateFromScreen(float x, float y);
 };
 
 #endif // VIEWPORTORTOLEFT_H
