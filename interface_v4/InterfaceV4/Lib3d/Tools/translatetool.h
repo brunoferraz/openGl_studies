@@ -14,7 +14,7 @@ public:
     void display();
     void mousePress();
     void mouseRelease();
-    //void mouseMove();
+    void mouseMove();
 };
 
 #endif // TRANSLATETOOL_H

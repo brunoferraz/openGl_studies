@@ -61,3 +61,8 @@ void ViewPort::rotate(float angle, float x, float y, float z)
     glRotatef(angle, x, y, z);
     glMatrixMode(GL_MODELVIEW);
 }
+
+Eigen::Vector3f ViewPort::getTranslateFromScreen(float x, float y)
+{
+
+}

@@ -47,7 +47,9 @@ void Interface::setCurrentSelectList(QList<AbstractObj *> &l)
 void Interface::start(int w, int h)
 {
     view.setSize(w, h);
-    view.setViewPort(ViewManager::PERSPECTIVE);
+//    view.setViewPort(ViewManager::PERSPECTIVE);
+    //view.setViewPort(ViewManager::TOP);
+    view.setViewPort(ViewManager::LEFT);
     setCurrentDisplayList(displayList);
     setCurrentSelectList(displayList);
     selectionTransform <<   1,  0,  0,  0,
@@ -122,7 +124,7 @@ void Interface::mouseRelease()
 {
     if(Mouse::overIndex != -1 && Mouse::overIndex < currentSelectList->length())
     {
-        currentSelectList->at(Mouse::overIndex)->mousePress();
+        currentSelectList->at(Mouse::overIndex)->mouseRelease();
     }
     tool.mouseRelease();
     //If released mouse button on something
@@ -130,14 +132,26 @@ void Interface::mouseRelease()
 
 void Interface::keyPress()
 {
-    if(Keyboard::Key_c){
-        tool.setTool(Tool::CAMERA);
-    }else if(Keyboard::Key_v){
-        tool.setTool(Tool::SELECT);
-    }else if(Keyboard::Key_d){
-        tool.setTool(Tool::DRAW);
-    }else if(Keyboard::Key_t){
-        tool.setTool(Tool::TRANSLATE);
+    if(Keyboard::Key_ctrl){
+        if(Keyboard::Key_p){
+            view.setViewPort(ViewManager::PERSPECTIVE);
+        }else if(Keyboard::Key_t){
+            view.setViewPort(ViewManager::TOP);
+        }else if(Keyboard::Key_f){
+            view.setViewPort(ViewManager::FRONT);
+        }else if(Keyboard::Key_l){
+            view.setViewPort(ViewManager::LEFT);
+        }
+    }else{
+        if(Keyboard::Key_c){
+            tool.setTool(Tool::CAMERA);
+        }else if(Keyboard::Key_v){
+            tool.setTool(Tool::SELECT);
+        }else if(Keyboard::Key_d){
+            tool.setTool(Tool::DRAW);
+        }else if(Keyboard::Key_t){
+            tool.setTool(Tool::TRANSLATE);
+        }
     }
     canvas->update();
 }

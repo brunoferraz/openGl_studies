@@ -22,6 +22,11 @@ public:
     void mouseOut();
     void mousePress();
     void mouseRelease();
+    void mouseMove();
+
+    void selectObj();
+    void deselectObj();
+
     int id;
 
     bool selected;

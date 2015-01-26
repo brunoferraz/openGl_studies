@@ -67,7 +67,9 @@ SOURCES       = ../InterfaceV4/main.cpp \
 		../InterfaceV4/Lib3d/Tools/drawtool.cpp \
 		../InterfaceV4/Lib3d/Tools/translatetool.cpp \
 		../InterfaceV4/Lib3d/Display/Primitives/basicgeometry.cpp \
-		../InterfaceV4/Lib3d/Tools/selectTool.cpp moc_mainwindow.cpp \
+		../InterfaceV4/Lib3d/Tools/selectTool.cpp \
+		../InterfaceV4/Lib3d/View/viewportortotop.cpp \
+		../InterfaceV4/Lib3d/View/viewportortoleft.cpp moc_mainwindow.cpp \
 		moc_glcanvas.cpp \
 		moc_abstractobj.cpp \
 		moc_tetrahedron.cpp \
@@ -99,6 +101,8 @@ OBJECTS       = main.o \
 		translatetool.o \
 		basicgeometry.o \
 		selectTool.o \
+		viewportortotop.o \
+		viewportortoleft.o \
 		moc_mainwindow.o \
 		moc_glcanvas.o \
 		moc_abstractobj.o \
@@ -344,7 +348,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/InterfaceV41.0.0 || mkdir -p .tmp/InterfaceV41.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/InterfaceV41.0.0/ && $(COPY_FILE) --parents ../InterfaceV4/mainwindow.h ../InterfaceV4/glcanvas.h ../InterfaceV4/Lib3d/View/viewportorto.h ../InterfaceV4/Lib3d/View/viewport.h ../InterfaceV4/Lib3d/Util/typecast.h ../InterfaceV4/Lib3d/View/viewmanager.h ../InterfaceV4/Lib3d/Tools/toolmanager.h ../InterfaceV4/Lib3d/Display/abstractobj.h ../InterfaceV4/Lib3d/interface.h ../InterfaceV4/Lib3d/Tools/tool.h ../InterfaceV4/Lib3d/Io/mouse.h ../InterfaceV4/Lib3d/Display/Primitives/tetrahedron.h ../InterfaceV4/Lib3d/Display/UiElements/grid.h ../InterfaceV4/Lib3d/Display/UiElements/boundingbox.h ../InterfaceV4/Lib3d/Display/UiElements/axis3d.h ../InterfaceV4/Lib3d/Display/UiElements/basicuiobj.h ../InterfaceV4/Lib3d/Tools/cameratool.h ../InterfaceV4/Lib3d/Io/keyboard.h ../InterfaceV4/Lib3d/Tools/drawtool.h ../InterfaceV4/Lib3d/Tools/translatetool.h ../InterfaceV4/Lib3d/Display/Primitives/basicgeometry.h ../InterfaceV4/Lib3d/Tools/selectTool.h .tmp/InterfaceV41.0.0/ && $(COPY_FILE) --parents ../InterfaceV4/main.cpp ../InterfaceV4/mainwindow.cpp ../InterfaceV4/glcanvas.cpp ../InterfaceV4/Lib3d/View/viewportorto.cpp ../InterfaceV4/Lib3d/View/viewport.cpp ../InterfaceV4/Lib3d/Util/typecast.cpp ../InterfaceV4/Lib3d/View/viewmanager.cpp ../InterfaceV4/Lib3d/Tools/toolmanager.cpp ../InterfaceV4/Lib3d/Display/abstractobj.cpp ../InterfaceV4/Lib3d/interface.cpp ../InterfaceV4/Lib3d/Tools/tool.cpp ../InterfaceV4/Lib3d/Io/mouse.cpp ../InterfaceV4/Lib3d/Display/Primitives/tetrahedron.cpp ../InterfaceV4/Lib3d/Display/UiElements/grid.cpp ../InterfaceV4/Lib3d/Display/UiElements/boundingbox.cpp ../InterfaceV4/Lib3d/Display/UiElements/axis3d.cpp ../InterfaceV4/Lib3d/Display/UiElements/basicuiobj.cpp ../InterfaceV4/Lib3d/Tools/cameratool.cpp ../InterfaceV4/Lib3d/Io/keyboard.cpp ../InterfaceV4/Lib3d/Tools/drawtool.cpp ../InterfaceV4/Lib3d/Tools/translatetool.cpp ../InterfaceV4/Lib3d/Display/Primitives/basicgeometry.cpp ../InterfaceV4/Lib3d/Tools/selectTool.cpp .tmp/InterfaceV41.0.0/ && $(COPY_FILE) --parents ../InterfaceV4/mainwindow.ui .tmp/InterfaceV41.0.0/ && (cd `dirname .tmp/InterfaceV41.0.0` && $(TAR) InterfaceV41.0.0.tar InterfaceV41.0.0 && $(COMPRESS) InterfaceV41.0.0.tar) && $(MOVE) `dirname .tmp/InterfaceV41.0.0`/InterfaceV41.0.0.tar.gz . && $(DEL_FILE) -r .tmp/InterfaceV41.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/InterfaceV41.0.0/ && $(COPY_FILE) --parents ../InterfaceV4/mainwindow.h ../InterfaceV4/glcanvas.h ../InterfaceV4/Lib3d/View/viewportorto.h ../InterfaceV4/Lib3d/View/viewport.h ../InterfaceV4/Lib3d/Util/typecast.h ../InterfaceV4/Lib3d/View/viewmanager.h ../InterfaceV4/Lib3d/Tools/toolmanager.h ../InterfaceV4/Lib3d/Display/abstractobj.h ../InterfaceV4/Lib3d/interface.h ../InterfaceV4/Lib3d/Tools/tool.h ../InterfaceV4/Lib3d/Io/mouse.h ../InterfaceV4/Lib3d/Display/Primitives/tetrahedron.h ../InterfaceV4/Lib3d/Display/UiElements/grid.h ../InterfaceV4/Lib3d/Display/UiElements/boundingbox.h ../InterfaceV4/Lib3d/Display/UiElements/axis3d.h ../InterfaceV4/Lib3d/Display/UiElements/basicuiobj.h ../InterfaceV4/Lib3d/Tools/cameratool.h ../InterfaceV4/Lib3d/Io/keyboard.h ../InterfaceV4/Lib3d/Tools/drawtool.h ../InterfaceV4/Lib3d/Tools/translatetool.h ../InterfaceV4/Lib3d/Display/Primitives/basicgeometry.h ../InterfaceV4/Lib3d/Tools/selectTool.h ../InterfaceV4/Lib3d/View/viewportortotop.h ../InterfaceV4/Lib3d/View/viewportortoleft.h .tmp/InterfaceV41.0.0/ && $(COPY_FILE) --parents ../InterfaceV4/main.cpp ../InterfaceV4/mainwindow.cpp ../InterfaceV4/glcanvas.cpp ../InterfaceV4/Lib3d/View/viewportorto.cpp ../InterfaceV4/Lib3d/View/viewport.cpp ../InterfaceV4/Lib3d/Util/typecast.cpp ../InterfaceV4/Lib3d/View/viewmanager.cpp ../InterfaceV4/Lib3d/Tools/toolmanager.cpp ../InterfaceV4/Lib3d/Display/abstractobj.cpp ../InterfaceV4/Lib3d/interface.cpp ../InterfaceV4/Lib3d/Tools/tool.cpp ../InterfaceV4/Lib3d/Io/mouse.cpp ../InterfaceV4/Lib3d/Display/Primitives/tetrahedron.cpp ../InterfaceV4/Lib3d/Display/UiElements/grid.cpp ../InterfaceV4/Lib3d/Display/UiElements/boundingbox.cpp ../InterfaceV4/Lib3d/Display/UiElements/axis3d.cpp ../InterfaceV4/Lib3d/Display/UiElements/basicuiobj.cpp ../InterfaceV4/Lib3d/Tools/cameratool.cpp ../InterfaceV4/Lib3d/Io/keyboard.cpp ../InterfaceV4/Lib3d/Tools/drawtool.cpp ../InterfaceV4/Lib3d/Tools/translatetool.cpp ../InterfaceV4/Lib3d/Display/Primitives/basicgeometry.cpp ../InterfaceV4/Lib3d/Tools/selectTool.cpp ../InterfaceV4/Lib3d/View/viewportortotop.cpp ../InterfaceV4/Lib3d/View/viewportortoleft.cpp .tmp/InterfaceV41.0.0/ && $(COPY_FILE) --parents ../InterfaceV4/mainwindow.ui .tmp/InterfaceV41.0.0/ && (cd `dirname .tmp/InterfaceV41.0.0` && $(TAR) InterfaceV41.0.0.tar InterfaceV41.0.0 && $(COMPRESS) InterfaceV41.0.0.tar) && $(MOVE) `dirname .tmp/InterfaceV41.0.0`/InterfaceV41.0.0.tar.gz . && $(DEL_FILE) -r .tmp/InterfaceV41.0.0
 
 
 clean:compiler_clean 
@@ -1909,7 +1913,8 @@ viewmanager.o: ../InterfaceV4/Lib3d/View/viewmanager.cpp ../InterfaceV4/Lib3d/Vi
 		/usr/include/qt5/QtCore/QList \
 		/usr/include/qt5/QtCore/qlist.h \
 		/usr/include/qt5/QtCore/qalgorithms.h \
-		/usr/include/qt5/QtCore/qiterator.h
+		/usr/include/qt5/QtCore/qiterator.h \
+		../InterfaceV4/Lib3d/View/viewportortotop.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o viewmanager.o ../InterfaceV4/Lib3d/View/viewmanager.cpp
 
 toolmanager.o: ../InterfaceV4/Lib3d/Tools/toolmanager.cpp ../InterfaceV4/Lib3d/Tools/toolmanager.h \
@@ -1993,6 +1998,7 @@ toolmanager.o: ../InterfaceV4/Lib3d/Tools/toolmanager.cpp ../InterfaceV4/Lib3d/T
 		../InterfaceV4/Lib3d/Util/typecast.h \
 		../InterfaceV4/Lib3d/Tools/tool.h \
 		../InterfaceV4/Lib3d/Display/UiElements/axis3d.h \
+		../InterfaceV4/Lib3d/Tools/selectTool.h \
 		../InterfaceV4/Lib3d/Tools/cameratool.h \
 		../InterfaceV4/Lib3d/Tools/drawtool.h \
 		../InterfaceV4/Lib3d/Tools/translatetool.h \
@@ -3465,6 +3471,7 @@ translatetool.o: ../InterfaceV4/Lib3d/Tools/translatetool.cpp ../InterfaceV4/Lib
 		/usr/include/qt5/QtCore/QList \
 		../InterfaceV4/Lib3d/Util/typecast.h \
 		../InterfaceV4/Lib3d/Display/UiElements/axis3d.h \
+		../InterfaceV4/Lib3d/Tools/selectTool.h \
 		../InterfaceV4/Lib3d/interface.h \
 		../InterfaceV4/Lib3d/View/viewmanager.h \
 		../InterfaceV4/Lib3d/View/viewport.h \
@@ -3664,10 +3671,11 @@ basicgeometry.o: ../InterfaceV4/Lib3d/Display/Primitives/basicgeometry.cpp ../In
 		/usr/include/qt5/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o basicgeometry.o ../InterfaceV4/Lib3d/Display/Primitives/basicgeometry.cpp
 
-selectTool.o: ../InterfaceV4/Lib3d/Tools/selectTool.cpp ../InterfaceV4/Lib3d/Io/mouse.h \
-		/usr/include/qt5/QtGui/QMouseEvent \
-		/usr/include/qt5/QtGui/qevent.h \
-		/usr/include/qt5/QtGui/qwindowdefs.h \
+selectTool.o: ../InterfaceV4/Lib3d/Tools/selectTool.cpp ../InterfaceV4/Lib3d/Tools/selectTool.h \
+		../InterfaceV4/Lib3d/Tools/tool.h \
+		/usr/include/qt5/QtCore/QDebug \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
 		/usr/include/qt5/QtCore/qglobal.h \
 		/usr/include/qt5/QtCore/qconfig.h \
 		/usr/include/qt5/QtCore/qfeatures.h \
@@ -3704,20 +3712,23 @@ selectTool.o: ../InterfaceV4/Lib3d/Tools/selectTool.cpp ../InterfaceV4/Lib3d/Io/
 		/usr/include/qt5/QtCore/qtypeinfo.h \
 		/usr/include/qt5/QtCore/qtypetraits.h \
 		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qobject.h \
 		/usr/include/qt5/QtCore/qobjectdefs.h \
 		/usr/include/qt5/QtCore/qnamespace.h \
 		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
-		/usr/include/qt5/QtGui/qwindowdefs_win.h \
-		/usr/include/qt5/QtCore/qobject.h \
 		/usr/include/qt5/QtCore/qstring.h \
-		/usr/include/qt5/QtCore/qchar.h \
 		/usr/include/qt5/QtCore/qbytearray.h \
-		/usr/include/qt5/QtCore/qrefcount.h \
 		/usr/include/qt5/QtCore/qarraydata.h \
 		/usr/include/qt5/QtCore/qstringbuilder.h \
-		/usr/include/qt5/QtCore/qlist.h \
-		/usr/include/qt5/QtCore/qalgorithms.h \
-		/usr/include/qt5/QtCore/qiterator.h \
 		/usr/include/qt5/QtCore/qcoreevent.h \
 		/usr/include/qt5/QtCore/qscopedpointer.h \
 		/usr/include/qt5/QtCore/qmetatype.h \
@@ -3725,27 +3736,31 @@ selectTool.o: ../InterfaceV4/Lib3d/Tools/selectTool.cpp ../InterfaceV4/Lib3d/Io/
 		/usr/include/qt5/QtCore/qcontainerfwd.h \
 		/usr/include/qt5/QtCore/qisenum.h \
 		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		../InterfaceV4/Lib3d/Display/abstractobj.h \
+		/usr/include/qt5/QtCore/QObject \
+		/usr/include/qt5/QtCore/QList \
+		../InterfaceV4/Lib3d/Util/typecast.h \
+		../InterfaceV4/Lib3d/Display/UiElements/axis3d.h \
+		../InterfaceV4/Lib3d/Io/mouse.h \
+		/usr/include/qt5/QtGui/QMouseEvent \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
 		/usr/include/qt5/QtGui/qregion.h \
 		/usr/include/qt5/QtCore/qrect.h \
 		/usr/include/qt5/QtCore/qsize.h \
-		/usr/include/qt5/QtCore/qpoint.h \
-		/usr/include/qt5/QtCore/qdatastream.h \
-		/usr/include/qt5/QtCore/qiodevice.h \
-		/usr/include/qt5/QtCore/qpair.h \
 		/usr/include/qt5/QtGui/qkeysequence.h \
-		/usr/include/qt5/QtCore/qvariant.h \
-		/usr/include/qt5/QtCore/qmap.h \
-		/usr/include/qt5/QtCore/qdebug.h \
-		/usr/include/qt5/QtCore/qhash.h \
-		/usr/include/qt5/QtCore/qtextstream.h \
-		/usr/include/qt5/QtCore/qlocale.h \
-		/usr/include/qt5/QtCore/qshareddata.h \
-		/usr/include/qt5/QtCore/qvector.h \
-		/usr/include/qt5/QtCore/qset.h \
-		/usr/include/qt5/QtCore/qcontiguouscache.h \
-		/usr/include/qt5/QtCore/qstringlist.h \
-		/usr/include/qt5/QtCore/qregexp.h \
-		/usr/include/qt5/QtCore/qstringmatcher.h \
 		/usr/include/qt5/QtCore/qurl.h \
 		/usr/include/qt5/QtCore/qurlquery.h \
 		/usr/include/qt5/QtCore/qfile.h \
@@ -3757,14 +3772,7 @@ selectTool.o: ../InterfaceV4/Lib3d/Tools/selectTool.cpp ../InterfaceV4/Lib3d/Io/
 		../InterfaceV4/Lib3d/View/viewport.h \
 		/usr/include/qt5/QtCore/QString \
 		../InterfaceV4/Lib3d/View/viewportorto.h \
-		/usr/include/qt5/QtCore/QList \
 		../InterfaceV4/Lib3d/Tools/toolmanager.h \
-		../InterfaceV4/Lib3d/Display/abstractobj.h \
-		/usr/include/qt5/QtCore/QObject \
-		/usr/include/qt5/QtCore/QDebug \
-		../InterfaceV4/Lib3d/Util/typecast.h \
-		../InterfaceV4/Lib3d/Tools/tool.h \
-		../InterfaceV4/Lib3d/Display/UiElements/axis3d.h \
 		../InterfaceV4/glcanvas.h \
 		/usr/include/qt5/QtOpenGL/QGLWidget \
 		/usr/include/qt5/QtOpenGL/qgl.h \
@@ -3802,6 +3810,104 @@ selectTool.o: ../InterfaceV4/Lib3d/Tools/selectTool.cpp ../InterfaceV4/Lib3d/Io/
 		/usr/include/qt5/QtGui/QSurfaceFormat \
 		/usr/include/qt5/QtGui/qsurfaceformat.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o selectTool.o ../InterfaceV4/Lib3d/Tools/selectTool.cpp
+
+viewportortotop.o: ../InterfaceV4/Lib3d/View/viewportortotop.cpp ../InterfaceV4/Lib3d/View/viewportortotop.h \
+		../InterfaceV4/Lib3d/View/viewportorto.h \
+		../InterfaceV4/Lib3d/View/viewport.h \
+		/usr/include/qt5/QtCore/QString \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o viewportortotop.o ../InterfaceV4/Lib3d/View/viewportortotop.cpp
+
+viewportortoleft.o: ../InterfaceV4/Lib3d/View/viewportortoleft.cpp ../InterfaceV4/Lib3d/View/viewportortoleft.h \
+		../InterfaceV4/Lib3d/View/viewportorto.h \
+		../InterfaceV4/Lib3d/View/viewport.h \
+		/usr/include/qt5/QtCore/QString \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o viewportortoleft.o ../InterfaceV4/Lib3d/View/viewportortoleft.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

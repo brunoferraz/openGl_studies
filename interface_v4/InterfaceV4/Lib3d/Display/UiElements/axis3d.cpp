@@ -94,16 +94,34 @@ void Axis::mouseOver()
 
 void Axis::mouseOut()
 {
-    lastColor = colorIdle;
+    if(!selected){
+        lastColor = colorIdle;
+    }
 }
 
 void Axis::mousePress()
 {
-    selected = true;
     lastColor = colorSelected;
+    selectObj();
 }
 
 void Axis::mouseRelease()
+{
+    lastColor = colorIdle;
+    deselectObj();
+}
+
+void Axis::mouseMove()
+{
+    qDebug() << "movendo";
+}
+
+void Axis::selectObj()
+{
+    selected = true;
+}
+
+void Axis::deselectObj()
 {
     selected = false;
     lastColor = colorIdle;

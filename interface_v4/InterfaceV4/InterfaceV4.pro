@@ -40,7 +40,9 @@ SOURCES += main.cpp\
     Lib3d/Tools/drawtool.cpp \
     Lib3d/Tools/translatetool.cpp \
     Lib3d/Display/Primitives/basicgeometry.cpp \
-    Lib3d/Tools/selectTool.cpp
+    Lib3d/Tools/selectTool.cpp \
+    Lib3d/View/viewportortotop.cpp \
+    Lib3d/View/viewportortoleft.cpp
 
 HEADERS  += mainwindow.h \
     glcanvas.h \
@@ -63,6 +65,8 @@ HEADERS  += mainwindow.h \
     Lib3d/Tools/drawtool.h \
     Lib3d/Tools/translatetool.h \
     Lib3d/Display/Primitives/basicgeometry.h \
-    Lib3d/Tools/selectTool.h
+    Lib3d/Tools/selectTool.h \
+    Lib3d/View/viewportortotop.h \
+    Lib3d/View/viewportortoleft.h
 
 FORMS    += mainwindow.ui

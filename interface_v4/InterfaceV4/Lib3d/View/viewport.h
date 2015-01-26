@@ -34,6 +34,8 @@ public:
     virtual void configModelView();
     virtual void applyTransform();
     void rotate(float angle, float x, float y, float z);
+
+    Eigen::Vector3f getTranslateFromScreen(float x, float y);
 };
 
 #endif // VIEWPORT_H

@@ -33,6 +33,12 @@ void Keyboard::keyPress(QKeyEvent *ev)
     case Qt::Key_T:
         Key_t = true;
         break;
+    case Qt::Key_P:
+        Key_p = true;
+        break;
+    case Qt::Key_L:
+        Key_l = true;
+        break;
     default:
         break;
     }
@@ -69,6 +75,9 @@ void Keyboard::keyRelease(QKeyEvent *ev)
     case Qt::Key_T:
         Key_t = false;
         break;
+    case Qt::Key_L:
+        Key_l = false;
+        break;
     default:
         break;
     }
@@ -86,3 +95,4 @@ bool Keyboard::Key_d= false;
 bool Keyboard::Key_p= false;
 bool Keyboard::Key_v= false;
 bool Keyboard::Key_t= false;
+bool Keyboard::Key_l= false;

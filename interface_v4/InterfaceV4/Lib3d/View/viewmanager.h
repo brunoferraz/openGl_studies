@@ -28,6 +28,8 @@ public:
 
     ViewPort *currentView;
     void setViewPort(int const i);
+
+    Eigen::Vector3f getTranslateFromScreen(float x, float y);
 };
 
 #endif // VIEWMANAGER_H

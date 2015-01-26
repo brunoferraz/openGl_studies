@@ -27,8 +27,6 @@ void SelectTool::mousePress()
             Interface::tool.deselect();
         }
     }
-
-
 }
 
 void SelectTool::mouseOver()

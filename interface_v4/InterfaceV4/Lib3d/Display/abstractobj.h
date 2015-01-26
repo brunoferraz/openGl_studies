@@ -48,6 +48,9 @@ public:
     virtual void namePolyhedron();
 
     virtual void setPos(float _x, float _y, float _z);
+    float getX();
+    float getY();
+    float getZ();
 
 private:
     bool isMouseOver;

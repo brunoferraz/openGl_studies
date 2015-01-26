@@ -104,3 +104,18 @@ void AbstractObj::setPos(float _x, float _y, float _z)
     transform(1, 3) = _y;
     transform(2, 3) = _z;
 }
+
+float AbstractObj::getX()
+{
+    return transform(0, 3);
+}
+
+float AbstractObj::getY()
+{
+    return transform(1, 3);
+}
+
+float AbstractObj::getZ()
+{
+    return transform(2, 3);
+}

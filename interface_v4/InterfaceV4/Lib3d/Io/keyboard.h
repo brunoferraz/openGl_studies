@@ -18,6 +18,7 @@ public:
     static bool Key_p;
     static bool Key_v;
     static bool Key_t;
+    static bool Key_l;
 
     static void keyPress(QKeyEvent *ev);
     static void keyRelease(QKeyEvent *ev);
